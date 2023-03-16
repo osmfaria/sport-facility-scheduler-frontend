@@ -1,9 +1,8 @@
 export interface RegisterProps {
   email: string
   username: string
-  firstName: string
-  lastName: string
+  first_name: string
+  last_name: string
   password: string
   confirmPassword: string
-  isOwner: boolean
 }
