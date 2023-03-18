@@ -1,4 +1,4 @@
-import { RegisterProps } from '@/interfaces/registerInterface'
+import { RegisterProps, SetFieldValueType } from 'interfaces/registerInterface'
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration'
 import {
   Button,
@@ -8,6 +8,7 @@ import {
   ToggleButtonGroup,
   Box,
   Avatar,
+  Typography,
 } from '@mui/material'
 import { Stack } from '@mui/system'
 import StadiumIcon from '@mui/icons-material/Stadium'
@@ -15,10 +16,15 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox'
 import { Formik, Form, Field } from 'formik'
 import React, { ReactElement, useState } from 'react'
 import * as yup from 'yup'
+import { useUser } from 'providers/user'
+import LoadingBackdrop from '../components/LoadingBackdrop'
+import Link from 'next/link'
 
 function register(): ReactElement {
   const [isOwner, setIsOwner] = useState<boolean>(false)
+  const { registerUser, isLoading } = useUser()
 
+  // Keys must match the api keys
   const initialValues = {
     email: '',
     username: '',
@@ -26,6 +32,7 @@ function register(): ReactElement {
     last_name: '',
     password: '',
     confirmPassword: '',
+    is_owner: false,
   }
 
   const strongPasswordRegex =
@@ -66,18 +73,19 @@ function register(): ReactElement {
       .oneOf([yup.ref('password')], 'Must match with password'),
   })
 
-  const onSubmit = (values: RegisterProps): void => {
-    const registerInput = { ...values, is_owner: isOwner }
-    console.log(registerInput)
+  const onSubmit = (userData: RegisterProps): void => {
+    registerUser(userData)
   }
 
-  const handleAccountType = (
-    event: React.MouseEvent<HTMLElement>,
-    accountType: boolean | null
-  ) => {
-    // Guarantee that the toggleButtonGroup always keep one selected
-    if (accountType !== null) setIsOwner(accountType)
-  }
+  const handleAccountType =
+    (setFieldValue: SetFieldValueType) =>
+    (event: React.MouseEvent<HTMLElement>, accountType: boolean | null) => {
+      // Guarantee that the toggleButtonGroup always keep one selected
+      if (accountType !== null) {
+        setIsOwner(accountType)
+        setFieldValue('is_owner', accountType)
+      }
+    }
 
   return (
     <Container maxWidth='sm' sx={{ paddingTop: 10 }}>
@@ -90,28 +98,29 @@ function register(): ReactElement {
           backdropFilter: 'blur(20px)',
         }}
       >
+        <Avatar
+          sx={{
+            bgcolor: '#1976d2',
+            margin: '-60px auto',
+            marginBottom: 2,
+            width: '80px',
+            height: '80px',
+            boxShadow: 8,
+          }}
+        >
+          <AppRegistrationIcon fontSize='large' />
+        </Avatar>
+        <Typography variant='h3' mb={4} color='primary'>
+          Register
+        </Typography>
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={onSubmit}
         >
-          {({ errors, touched }) => (
+          {({ errors, touched, setFieldValue }) => (
             <Form>
               <Stack spacing={2}>
-                <Avatar
-                  sx={{
-                    bgcolor: '#1976d2',
-                    margin: 'auto',
-                    marginBottom: 2,
-                    width: '80px',
-                    height: '80px',
-                    transform: 'translateY(-60px)',
-                    boxShadow: 2,
-                  }}
-                >
-                  <AppRegistrationIcon fontSize='large' />
-                </Avatar>
-
                 <Field
                   as={TextField}
                   name='email'
@@ -130,7 +139,7 @@ function register(): ReactElement {
                 />
                 <ToggleButtonGroup
                   exclusive
-                  onChange={handleAccountType}
+                  onChange={handleAccountType(setFieldValue)}
                   value={isOwner}
                   color='primary'
                 >
@@ -185,20 +194,28 @@ function register(): ReactElement {
                     !!touched.confirmPassword && errors.confirmPassword
                   }
                 />
-
-                <Button
-                  variant='contained'
-                  color='primary'
-                  type='submit'
-                  size='large'
-                >
-                  Register
-                </Button>
               </Stack>
+              <Button
+                variant='contained'
+                color='primary'
+                type='submit'
+                size='large'
+                sx={{ marginTop: 8, width: '100%' }}
+              >
+                Register
+              </Button>
             </Form>
           )}
         </Formik>
+        <Typography mt={5}>
+          Alrady have an account?
+          <Link href='/login' style={{ marginLeft: '4px' }}>
+            Sing In
+          </Link>
+        </Typography>
       </Box>
+
+      <LoadingBackdrop isLoading={isLoading} />
     </Container>
   )
 }

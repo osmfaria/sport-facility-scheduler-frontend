@@ -29,6 +29,6 @@
     "jest.config.ts",
     "global.d.ts",
     "**/*.test.tsx"
-  ],
+, "src/pages/api/auth/[...nextauth].js"  ],
   "exclude": ["node_modules", "cypress.config.ts"]
 }
