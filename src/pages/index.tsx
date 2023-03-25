@@ -27,7 +27,6 @@ import FilterDrawer from '../components/FilterDrawer'
 export default function Home() {
   const [city, setCity] = useState<string>('')
   const [date, setDate] = useState<Date>(new Date())
-  const [isFilterOpen, setIsFilterOpen] = useState<boolean>(true)
   const { getCourtsByLocationAndTime } = useCourt()
 
   const handleLocation = () => {
@@ -73,13 +72,10 @@ export default function Home() {
     }
   }
 
-  const handleFilterDrawer = () => {
-    setIsFilterOpen(!isFilterOpen)
-  }
+
 
   return (
     <>
-      <FilterDrawer handleDrawer={handleFilterDrawer} isOpen={isFilterOpen} />
       <Container sx={{ paddingTop: '40px' }}>
         <LocationAlert handleLocation={handleLocation} />
         <Grid
@@ -90,7 +86,6 @@ export default function Home() {
         >
           <Grid item>
             <IconButton
-              onClick={handleFilterDrawer}
               size='large'
               sx={{ boxShadow: 1, marginRight: 1 }}
             >
