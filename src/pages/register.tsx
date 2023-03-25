@@ -1,7 +1,5 @@
 import { RegisterProps, SetFieldValueType } from 'interfaces/registerInterface'
-import AppRegistrationIcon from '@mui/icons-material/AppRegistration'
 import {
-  Button,
   ToggleButton,
   Container,
   TextField,
@@ -9,20 +7,24 @@ import {
   Box,
   Avatar,
   Typography,
+  useTheme,
 } from '@mui/material'
 import { Stack } from '@mui/system'
 import StadiumIcon from '@mui/icons-material/Stadium'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
-import { Formik, Form, Field } from 'formik'
+import { Formik, Form, Field, FormikHelpers } from 'formik'
 import React, { ReactElement, useState } from 'react'
 import * as yup from 'yup'
 import { useUser } from 'providers/user'
-import LoadingBackdrop from '../components/LoadingBackdrop'
 import Link from 'next/link'
+import LoadingButton from '@mui/lab/LoadingButton'
 
-function register(): ReactElement {
+import HowToRegIcon from '@mui/icons-material/HowToReg'
+
+function Register(): ReactElement {
   const [isOwner, setIsOwner] = useState<boolean>(false)
   const { registerUser, isLoading } = useUser()
+  const theme = useTheme()
 
   // Keys must match the api keys
   const initialValues = {
@@ -73,8 +75,16 @@ function register(): ReactElement {
       .oneOf([yup.ref('password')], 'Must match with password'),
   })
 
-  const onSubmit = (userData: RegisterProps): void => {
-    registerUser(userData)
+  const onSubmit = async (
+    userData: RegisterProps,
+    formik: FormikHelpers<RegisterProps>
+  ): Promise<void> => {
+    const res = await registerUser(userData)
+    if (res) {
+      for (let err in res) {
+        formik.setFieldError(err, res[err]![0])
+      }
+    }
   }
 
   const handleAccountType =
@@ -108,7 +118,7 @@ function register(): ReactElement {
             boxShadow: 8,
           }}
         >
-          <AppRegistrationIcon fontSize='large' />
+          <HowToRegIcon fontSize='large' />
         </Avatar>
         <Typography variant='h3' mb={4} color='primary'>
           Register
@@ -116,7 +126,7 @@ function register(): ReactElement {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={onSubmit}
+          onSubmit={(user, formik) => onSubmit(user, formik)}
         >
           {({ errors, touched, setFieldValue }) => (
             <Form>
@@ -195,29 +205,32 @@ function register(): ReactElement {
                   }
                 />
               </Stack>
-              <Button
+              <LoadingButton
                 variant='contained'
+                loading={isLoading}
+                loadingPosition='center'
                 color='primary'
                 type='submit'
                 size='large'
-                sx={{ marginTop: 8, width: '100%' }}
+                sx={{ marginTop: 7, width: '100%' }}
               >
                 Register
-              </Button>
+              </LoadingButton>
             </Form>
           )}
         </Formik>
         <Typography mt={5}>
           Alrady have an account?
-          <Link href='/login' style={{ marginLeft: '4px' }}>
+          <Link
+            href='/login'
+            style={{ marginLeft: '4px', color: theme.palette.primary.main }}
+          >
             Sing In
           </Link>
         </Typography>
       </Box>
-
-      <LoadingBackdrop isLoading={isLoading} />
     </Container>
   )
 }
 
-export default register
+export default Register

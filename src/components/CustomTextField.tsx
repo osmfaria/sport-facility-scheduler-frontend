@@ -20,6 +20,7 @@ const CustomTextField = ({
 
   return (
     <TextField
+      type={type}
       label={label}
       {...field}
       {...props}

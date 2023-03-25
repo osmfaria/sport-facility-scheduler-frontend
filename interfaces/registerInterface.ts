@@ -15,4 +15,10 @@ export interface LoginUserProps {
   password: string
 }
 
+export interface RegisterAxiosError {
+  email?: string[]
+  username?: string[]
+  [key: string]: string[] | undefined 
+}
+
 export type SetFieldValueType = FormikProps<any>['setFieldValue']

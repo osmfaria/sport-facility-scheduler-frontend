@@ -1,17 +1,24 @@
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
-import { ThemeProvider } from '@mui/material/styles'
 import { CssBaseline } from '@mui/material'
-import { theme } from '@/styles/theme'
 import Providers from 'providers'
+import { SessionProvider } from 'next-auth/react'
+import type { Session } from 'next-auth'
+import Layout from '../components/Layout'
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps<{ session: Session }>) {
+
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <SessionProvider session={session} refetchInterval={60 * 60 * 2}>
       <Providers>
-        <Component {...pageProps} />
+        <CssBaseline />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </Providers>
-    </ThemeProvider>
+    </SessionProvider>
   )
 }

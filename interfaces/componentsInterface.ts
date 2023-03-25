@@ -11,3 +11,18 @@ export interface CustomTextFieldProps {
   startAdornment?: ReactNode
   endAdornment?: ReactNode
 }
+
+export interface SettingsDrawerProps {
+  isOpen: boolean
+  handleDrawer: () => void
+}
+
+export interface LocationAlertProps {
+  handleLocation: () => void
+}
+
+export interface locationComponent {
+  long_name: string
+  short_name: string
+  types: string[]
+}

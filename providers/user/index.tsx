@@ -1,6 +1,11 @@
 import { UserProviderContext } from 'interfaces/providerInterface'
-import { RegisterProps, LoginUserProps } from 'interfaces/registerInterface'
+import {
+  RegisterProps,
+  LoginUserProps,
+  RegisterAxiosError,
+} from 'interfaces/registerInterface'
 import { childrenProp } from 'interfaces/utilityInterface'
+import { useRouter } from 'next/router'
 import { createContext, useContext, useState } from 'react'
 import API from 'services/api'
 
@@ -10,15 +15,23 @@ const UserContext = createContext<UserProviderContext>(
 
 export const UserProvider = ({ children }: childrenProp) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const router = useRouter()
 
-  const registerUser = async (user: RegisterProps): Promise<void> => {
+  const registerUser = async (
+    user: RegisterProps
+  ): Promise<RegisterAxiosError | undefined> => {
     setIsLoading(true)
-    await API.post('register/', user)
-      .then((res) => {
+    const res = await API.post('register/', user)
+      .then((_) => {
         setIsLoading(false)
-        console.log(res)
+        router.push('/login')
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        setIsLoading(false)
+        return err.response.data
+      })
+
+    return res
   }
 
   const loginUser = async (
@@ -26,7 +39,7 @@ export const UserProvider = ({ children }: childrenProp) => {
   ): Promise<string | undefined> => {
     const user = await API.post('login/', credentials)
       .then((res) => res.data)
-      .catch((err) => console.log(err))
+      .catch((err) => console.log('provider error:',err))
 
     return user
   }

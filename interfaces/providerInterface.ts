@@ -1,7 +1,61 @@
-import { LoginUserProps, RegisterProps } from './registerInterface'
+import { SyntheticEvent } from 'react'
+import {
+  LoginUserProps,
+  RegisterAxiosError,
+  RegisterProps,
+} from './registerInterface'
 
 export interface UserProviderContext {
-  registerUser: (user: RegisterProps) => void
+  registerUser: (user: RegisterProps) => Promise<RegisterAxiosError | undefined>
   loginUser: (credentials: LoginUserProps) => Promise<string | undefined>
   isLoading: boolean
+}
+
+export interface ColorModeContext {
+  toggleColorMode: (event: SyntheticEvent, value: string) => void
+  mode: 'light' | 'dark'
+}
+
+export interface CourtProviderContext {
+  getCourtsByLocationAndTime: (city: string, date: Date) => Promise<void>
+  isLoading: boolean
+  courts: Court[]
+}
+
+export interface Court {
+  capacity: number
+  closing_hour: string
+  id: string
+  is_indoor: boolean
+  max_schedule_range_in_days: number
+  name: string
+  opening_hour: string
+  price_by_hour: string
+  sport: string
+  sport_facility: {
+    name: string
+  }
+}
+
+export interface CustomThemeConfig {
+  palette: {
+    mode: 'dark'
+    primary: {
+      main: string
+      light: string
+      dark: string
+      contrastText: string
+    }
+    secondary: {
+      main: string
+    }
+    background: {
+      default: string
+      paper: string
+    }
+    text: {
+      primary: string
+      secondary: string
+    }
+  }
 }
