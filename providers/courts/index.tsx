@@ -11,12 +11,20 @@ const CourtContext = createContext<CourtProviderContext>(
 export const CourtProvider = ({ children }: childrenProp) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [courts, setCourts] = useState<Court[]>([])
+  const [city, setCity] = useState<string>('')
+  const [date, setDate] = useState<Date>(new Date())
 
-  const getCourtsByLocationAndTime = async (city: string, date: Date) => {
+  const getCourtsByLocationAndTime = async (
+    sport: string | undefined
+  ) => {
     setIsLoading(true)
     const formattedDate = dayjs(date).format('YYYY-MM-DD')
+    const formattedSport = sport ? '?sport=' + sport.trim().toLowerCase() : ''
+    
     await API.get(
-      `sport_facilities/courts/filter/${city || 'vancouver'}/${formattedDate}/`
+      `sport_facilities/courts/filter/${
+        city || 'vancouver'
+      }/${formattedDate}/${formattedSport}`
     )
       .then((res) => {
         setIsLoading(false)
@@ -26,7 +34,17 @@ export const CourtProvider = ({ children }: childrenProp) => {
   }
 
   return (
-    <CourtContext.Provider value={{ getCourtsByLocationAndTime, courts, isLoading }}>
+    <CourtContext.Provider
+      value={{
+        getCourtsByLocationAndTime,
+        courts,
+        isLoading,
+        city,
+        setCity,
+        date,
+        setDate,
+      }}
+    >
       {children}
     </CourtContext.Provider>
   )

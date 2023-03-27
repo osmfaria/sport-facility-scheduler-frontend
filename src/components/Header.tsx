@@ -1,44 +1,17 @@
 import AppBar from '@mui/material/AppBar'
-// import Box, { BoxProps } from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
-import MenuIcon from '@mui/icons-material/Menu'
 import LoginIcon from '@mui/icons-material/Login'
 import SettingsIcon from '@mui/icons-material/Settings'
 import LogoutIcon from '@mui/icons-material/Logout'
 import HowToRegIcon from '@mui/icons-material/HowToReg'
-import { Container, Divider, styled, Tooltip } from '@mui/material'
+import { Box, Container, Divider, styled, Tooltip } from '@mui/material'
 import { Stack } from '@mui/system'
 import { useState } from 'react'
 import SettingsDrawer from './SettingsDrawer'
 import { signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
-import logo from '../../public/logo-schedule.png'
-import Image from 'next/image'
-import MuiBox, { BoxProps as MuiBoxProps } from '@mui/material/Box'
-
-
-interface BoxProps extends MuiBoxProps {
-  open?: boolean
-}
-
-const Box = styled(MuiBox, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})<BoxProps>(({ theme, open }) => ({
-  transition: theme.transitions.create(['margin', 'width'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    width: `calc(100% - 250px)`,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginRight: '250px',
-  }),
-}))
 
 export default function Header() {
   const glassStyle = {
@@ -48,6 +21,7 @@ export default function Header() {
     backdropFilter: 'blur(5px)',
     color: 'inherit',
   }
+
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const handleDrawer = (): void => {
     setIsOpen((state) => !state)
@@ -70,7 +44,12 @@ export default function Header() {
               component='div'
               sx={{ flexGrow: 1 }}
             >
-              Court-Scheduler
+              <Link
+                href='/'
+                style={{ textDecoration: 'none', color: 'inherit' }}
+              >
+                Court-Scheduler
+              </Link>
             </Typography>
             <Stack spacing={1} direction='row'>
               {!!session ? (

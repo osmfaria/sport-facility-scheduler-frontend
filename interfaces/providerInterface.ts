@@ -1,4 +1,4 @@
-import { SyntheticEvent } from 'react'
+import { Dispatch, SetStateAction, SyntheticEvent } from 'react'
 import {
   LoginUserProps,
   RegisterAxiosError,
@@ -17,9 +17,13 @@ export interface ColorModeContext {
 }
 
 export interface CourtProviderContext {
-  getCourtsByLocationAndTime: (city: string, date: Date) => Promise<void>
+  getCourtsByLocationAndTime: (sport?: string) => Promise<void>
   isLoading: boolean
   courts: Court[]
+  city: string
+  setCity: Dispatch<SetStateAction<string>>
+  date: Date
+  setDate: Dispatch<SetStateAction<Date>>
 }
 
 export interface Court {

@@ -3,16 +3,15 @@ import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import { ReactElement, useState } from 'react'
 import { LocationAlertProps } from 'interfaces/componentsInterface'
+import { useCourt } from 'providers/courts'
 
 const LocationAlert = ({
   handleLocation,
 }: LocationAlertProps): ReactElement => {
   const [isOpen, setIsOpen] = useState<boolean>(true)
+
   return (
-    <Collapse
-      in={isOpen}
-      sx={{ maxWidth: '350px', margin: '0 auto 35px' }}
-    >
+    <Collapse in={isOpen} sx={{ maxWidth: '350px', margin: '0 auto 35px' }}>
       <Alert
         onClose={() => setIsOpen(false)}
         action={

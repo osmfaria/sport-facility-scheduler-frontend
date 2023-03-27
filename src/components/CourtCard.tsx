@@ -2,7 +2,6 @@ import {
   Avatar,
   Button,
   Card,
-  CardActionArea,
   CardActions,
   CardContent,
   CardHeader,
@@ -12,25 +11,24 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
-  Paper,
-  Typography,
+  Skeleton,
 } from '@mui/material'
 import { Court } from 'interfaces/providerInterface'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn'
-import dayjs from 'dayjs'
 import { MonetizationOn } from '@mui/icons-material'
+import { convertToCurrency, convertToHour } from '@/utils/functions'
+import { ReactElement } from 'react'
+import { useRouter } from 'next/router'
 
-const CourtCard = ({ court }: { court: Court }) => {
-  const convertToHour = (input: string): string => {
-    return dayjs(input, 'HH:mm:ss').format('h:mm A')
-  }
+const CourtCard = ({ court }: { court: Court }): ReactElement => {
   const startingHour = convertToHour(court.opening_hour)
   const closingHour = convertToHour(court.closing_hour)
-  const price = Number(court.price_by_hour).toLocaleString('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  })
+  const price = convertToCurrency(court.price_by_hour)
+  const router = useRouter()
+
+  const handleClick = (): void => {
+    router.push(`/courts/${court.id}`)
+  }
 
   return (
     <Card>
@@ -44,12 +42,7 @@ const CourtCard = ({ court }: { court: Court }) => {
       />
       <Divider sx={{ margin: '0 16px' }} />
       <CardContent>
-        {/* <Paper sx={{ maxWidth: '130px' }}> */}
         <Chip label={court.sport} variant='filled' color='secondary' />
-        {/* <Typography variant='subtitle2' ml={2}>
-            {court.sport}
-          </Typography> */}
-        {/* </Paper> */}
         <List>
           <ListItem>
             <ListItemAvatar>
@@ -78,7 +71,7 @@ const CourtCard = ({ court }: { court: Court }) => {
           padding: '8px 16px',
         }}
       >
-        <Button size='medium' variant='contained'>
+        <Button size='medium' variant='contained' onClick={handleClick}>
           Book
         </Button>
       </CardActions>
@@ -86,4 +79,41 @@ const CourtCard = ({ court }: { court: Court }) => {
   )
 }
 
-export default CourtCard
+const CourtCardSkeleton = (): ReactElement => {
+  return (
+    <Card sx={{ width: '256px' }}>
+      <Skeleton variant='rectangular' height={72} width='100%' />
+      <Divider sx={{ margin: '16px 16px 0' }} />
+      <CardContent>
+        <Skeleton variant='rounded' width='50%' height={32} />
+        <List>
+          <ListItem>
+            <ListItemAvatar>
+              <Skeleton variant='circular' width={40} height={40} />
+            </ListItemAvatar>
+            <Skeleton variant='rectangular' height={40} width='100%' />
+          </ListItem>
+          <ListItem>
+            <ListItemAvatar>
+              <Skeleton variant='circular' width={40} height={40} />
+            </ListItemAvatar>
+            <Skeleton variant='rectangular' height={40} width='100%' />
+          </ListItem>
+        </List>
+      </CardContent>
+      <Divider sx={{ margin: '16px 16px 0' }} />
+      <CardActions
+        disableSpacing
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          padding: '8px 16px',
+        }}
+      >
+        <Skeleton variant='rounded' height={36.5} width={70.5} />
+      </CardActions>
+    </Card>
+  )
+}
+
+export { CourtCard, CourtCardSkeleton }

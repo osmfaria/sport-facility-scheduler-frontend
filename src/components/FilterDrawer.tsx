@@ -1,28 +1,26 @@
 import {
   Box,
+  Button,
   Divider,
   Drawer,
   IconButton,
   Stack,
-  ToggleButton,
-  ToggleButtonGroup,
-  Typography,
+  TextField,
 } from '@mui/material'
-import LightModeIcon from '@mui/icons-material/LightMode'
-import DarkModeIcon from '@mui/icons-material/DarkMode'
-import CloseIcon from '@mui/icons-material/Close'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+import TuneIcon from '@mui/icons-material/Tune'
 import { SettingsDrawerProps } from 'interfaces/componentsInterface'
-import { useColorMode } from 'providers/theme'
+import { useCourt } from 'providers/courts'
+import { useState } from 'react'
 
 const FilterDrawer = ({ isOpen, handleDrawer }: SettingsDrawerProps) => {
-  const { mode, toggleColorMode } = useColorMode()
+  const { getCourtsByLocationAndTime } = useCourt()
+  const [sport, setSport] = useState<string>('')
 
-  const lightModeIconStyle = {
-    color: mode === 'light' ? 'orange' : undefined,
-  }
-
-  const darkModeIconStyle = {
-    color: mode === 'dark' ? 'blue' : undefined,
+  const handleFilter = (): void => {
+    getCourtsByLocationAndTime(sport)
+    setSport('')
+    handleDrawer()
   }
 
   return (
@@ -30,46 +28,39 @@ const FilterDrawer = ({ isOpen, handleDrawer }: SettingsDrawerProps) => {
       anchor='left'
       open={isOpen}
       onClose={handleDrawer}
-      variant='persistent'
+      PaperProps={{
+        sx: {
+          borderRadius: '0 10px 10px 0',
+        },
+      }}
     >
       <Box sx={{ width: '250px' }}>
         <Box
           sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: '15px 10px',
+            height: '64px',
+            lineHeight: '64px',
+            padding: '0 10px',
+            textAlign: 'right',
           }}
         >
-          <Typography variant='body1'>Settings</Typography>
           <IconButton onClick={handleDrawer}>
-            <CloseIcon color='primary' />
+            <ChevronLeftIcon color='primary' />
           </IconButton>
         </Box>
         <Divider />
         <Stack spacing={2} sx={{ padding: '15px 10px' }}>
-          <Typography>Mode</Typography>
-          <ToggleButtonGroup
-            value={mode}
-            exclusive
-            onChange={toggleColorMode}
-            size='small'
-          >
-            <ToggleButton value='light' sx={{ flexGrow: '1' }}>
-              Light
-              <LightModeIcon
-                fontSize='small'
-                sx={{ ...lightModeIconStyle, marginLeft: 1 }}
-              />
-            </ToggleButton>
-            <ToggleButton value='dark' sx={{ flexGrow: '1' }}>
-              Dark{' '}
-              <DarkModeIcon
-                fontSize='small'
-                sx={{ ...darkModeIconStyle, marginLeft: 1 }}
-              />
-            </ToggleButton>
-          </ToggleButtonGroup>
+          <TuneIcon color='primary' />
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            <TextField
+              label='sport'
+              size='small'
+              value={sport}
+              onChange={(e) => setSport(e.target.value)}
+            />
+            <Button variant='contained' onClick={() => handleFilter()}>
+              Go
+            </Button>
+          </Box>
         </Stack>
       </Box>
     </Drawer>

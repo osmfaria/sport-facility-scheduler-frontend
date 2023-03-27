@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import TextField from '@mui/material/TextField'
 import { FieldHookConfig, useField } from 'formik'
 import { CustomTextFieldProps } from 'interfaces/componentsInterface'
@@ -10,7 +10,7 @@ const CustomTextField = ({
   startAdornment,
   endAdornment,
   ...props
-}: CustomTextFieldProps) => {
+}: CustomTextFieldProps): ReactElement => {
   const [field, meta] = useField(name as string | FieldHookConfig<any>)
 
   const inputProps = {

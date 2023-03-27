@@ -39,10 +39,11 @@ const SettingsDrawer = ({ isOpen, handleDrawer }: SettingsDrawerProps) => {
       <Box sx={{ width: '250px' }}>
         <Box
           sx={{
+            height: '64px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            padding: '15px 10px',
+            padding: '0 10px',
           }}
         >
           <Typography variant='body1'>Settings</Typography>
