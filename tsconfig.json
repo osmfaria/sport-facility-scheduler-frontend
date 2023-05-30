@@ -28,6 +28,7 @@
     "./__test__/pages/register.test.tsx",
     "@testing-library/jest-dom",
     "jest.config.ts",
+    "next-auth.d.ts",
     "global.d.ts",
     "**/*.test.tsx",
     "src/pages/api/auth/[...nextauth].js"

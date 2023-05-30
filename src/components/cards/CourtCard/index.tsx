@@ -18,20 +18,27 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import { MonetizationOn } from '@mui/icons-material'
 import { convertToCurrency, convertToHour } from '@/utils/functions'
 import { ReactElement } from 'react'
-import { useRouter } from 'next/router'
+import { useSteps } from 'providers/StepsProvider'
+import {
+  sxCardAction,
+  sxCardHeader,
+  sxCard,
+  sxDividerSkeleton,
+  sxDivider,
+} from './styles'
 
 const CourtCard = ({ court }: { court: Court }): ReactElement => {
   const startingHour = convertToHour(court.opening_hour)
   const closingHour = convertToHour(court.closing_hour)
   const price = convertToCurrency(court.price_by_hour)
-  const router = useRouter()
+  const { handleNext } = useSteps()
 
   const handleClick = (): void => {
-    router.push(`/courts/${court.id}`)
+    handleNext(`/courts/${court.id}`)
   }
 
   return (
-    <Card>
+    <Card sx={sxCard}>
       <CardHeader
         title={court.name}
         subheader={
@@ -39,15 +46,16 @@ const CourtCard = ({ court }: { court: Court }): ReactElement => {
             Facility <strong>{court.sport_facility.name}</strong>
           </>
         }
+        sx={sxCardHeader}
       />
-      <Divider sx={{ margin: '0 16px' }} />
+      <Divider sx={sxDivider} />
       <CardContent>
-        <Chip label={court.sport} variant='filled' color='secondary' />
+        <Chip label={court.sport} variant='filled' />
         <List>
           <ListItem>
             <ListItemAvatar>
               <Avatar>
-                <AccessTimeIcon color='secondary' />
+                <AccessTimeIcon />
               </Avatar>
             </ListItemAvatar>
             <ListItemText primary={`${startingHour} - ${closingHour}`} />
@@ -55,22 +63,15 @@ const CourtCard = ({ court }: { court: Court }): ReactElement => {
           <ListItem>
             <ListItemAvatar>
               <Avatar>
-                <MonetizationOn color='secondary' />
+                <MonetizationOn />
               </Avatar>
             </ListItemAvatar>
             <ListItemText primary={price} secondary='per hour' />
           </ListItem>
         </List>
       </CardContent>
-      <Divider sx={{ margin: '0 16px' }} />
-      <CardActions
-        disableSpacing
-        sx={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          padding: '8px 16px',
-        }}
-      >
+      <Divider sx={sxDivider} />
+      <CardActions disableSpacing sx={sxCardAction}>
         <Button size='medium' variant='contained' onClick={handleClick}>
           Book
         </Button>
@@ -81,9 +82,9 @@ const CourtCard = ({ court }: { court: Court }): ReactElement => {
 
 const CourtCardSkeleton = (): ReactElement => {
   return (
-    <Card sx={{ width: '256px' }}>
+    <Card sx={sxCard}>
       <Skeleton variant='rectangular' height={72} width='100%' />
-      <Divider sx={{ margin: '16px 16px 0' }} />
+      <Divider sx={sxDividerSkeleton} />
       <CardContent>
         <Skeleton variant='rounded' width='50%' height={32} />
         <List>
@@ -101,15 +102,8 @@ const CourtCardSkeleton = (): ReactElement => {
           </ListItem>
         </List>
       </CardContent>
-      <Divider sx={{ margin: '16px 16px 0' }} />
-      <CardActions
-        disableSpacing
-        sx={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          padding: '8px 16px',
-        }}
-      >
+      <Divider sx={sxDividerSkeleton} />
+      <CardActions disableSpacing sx={sxCardAction}>
         <Skeleton variant='rounded' height={36.5} width={70.5} />
       </CardActions>
     </Card>

@@ -20,6 +20,11 @@ import { default as NextLink } from 'next/link'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { LoadingButton } from '@mui/lab'
+import {
+  sxAvatar,
+  sxBox,
+  sxContainer,
+} from '@/styles/login.styles'
 
 function Login(): ReactElement {
   const [isLoading, setIsLoading] = useState<boolean>()
@@ -47,10 +52,9 @@ function Login(): ReactElement {
       username: credentials.username,
       password: credentials.password,
     })
-    console.log('tentativa de login: ', res, res?.error)
     if (res && !res.error) {
       // Redirect to the desired page after successful login
-      router.push('/dashboard')
+      router.push('/')
       setIsLoading(false)
     } else {
       setIsLoading(false)
@@ -69,28 +73,9 @@ function Login(): ReactElement {
   }
 
   return (
-    <Container maxWidth='sm'>
-      <Box
-        sx={{
-          boxShadow: 1,
-          borderRadius: 1,
-          padding: '20px 40px 50px',
-          background: 'rgba(255, 255, 255, 0.1)',
-          backdropFilter: 'blur(20px)',
-          maxWidth: '400px',
-          margin: 'auto',
-        }}
-      >
-        <Avatar
-          sx={{
-            bgcolor: '#1976d2',
-            margin: '-60px auto',
-            marginBottom: 2,
-            width: '80px',
-            height: '80px',
-            boxShadow: 8,
-          }}
-        >
+    <Container maxWidth='sm' sx={sxContainer}>
+      <Box sx={sxBox}>
+        <Avatar sx={sxAvatar}>
           <ExitToAppIcon fontSize='large' />
         </Avatar>
         <Typography variant='h3' mb={4} color='primary'>
@@ -150,9 +135,13 @@ function Login(): ReactElement {
         </Formik>
         <Typography mt={5}>
           Don't have an account?
-          <NextLink href='/register' style={{ marginLeft: '4px', color: theme.palette.primary.main}}>
-            Sign Up
-          </NextLink>
+          <Typography
+            component='span'
+            color={theme.palette.primary.main}
+            ml={1}
+          >
+            <NextLink href='/register'>Sign Up</NextLink>
+          </Typography>
         </Typography>
       </Box>
     </Container>

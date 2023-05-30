@@ -9,28 +9,52 @@ const CourtContext = createContext<CourtProviderContext>(
 )
 
 export const CourtProvider = ({ children }: childrenProp) => {
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isLoadingCourts, setIsLoadingCourts] = useState<boolean>(false)
+  const [isLoadingCourt, setIsLoadingCourt] = useState<boolean>(false)
   const [courts, setCourts] = useState<Court[]>([])
   const [city, setCity] = useState<string>('')
-  const [date, setDate] = useState<Date>(new Date())
+  const [court, setCourt] = useState<Court | undefined>()
+  const [courtId, setCourtId] = useState<string>('')
 
   const getCourtsByLocationAndTime = async (
+    date: Date,
     sport: string | undefined
   ) => {
-    setIsLoading(true)
+    setIsLoadingCourts(true)
     const formattedDate = dayjs(date).format('YYYY-MM-DD')
     const formattedSport = sport ? '?sport=' + sport.trim().toLowerCase() : ''
-    
+
     await API.get(
       `sport_facilities/courts/filter/${
         city || 'vancouver'
       }/${formattedDate}/${formattedSport}`
     )
       .then((res) => {
-        setIsLoading(false)
+        setIsLoadingCourts(false)
         setCourts(res.data)
       })
       .catch((err) => console.log(err))
+  }
+
+  const getCourt = async (id: string): Promise<void> => {
+    setIsLoadingCourt(true)
+    await API.get(`sport_facilities/courts/${id}/`)
+      .then((res) => {
+        setCourt(res.data)
+        setIsLoadingCourt(false)
+      })
+      .catch((err) => {
+        console.log(err)
+        setIsLoadingCourt(false)
+      })
+  }
+
+  const selectCourtId = (id: string): void => {
+    setCourtId(id)
+  }
+
+  const selectCity = (name: string): void => {
+    setCity(name)
   }
 
   return (
@@ -38,11 +62,14 @@ export const CourtProvider = ({ children }: childrenProp) => {
       value={{
         getCourtsByLocationAndTime,
         courts,
-        isLoading,
+        isLoadingCourts,
         city,
-        setCity,
-        date,
-        setDate,
+        getCourt,
+        court,
+        isLoadingCourt,
+        selectCourtId,
+        courtId,
+        selectCity,
       }}
     >
       {children}

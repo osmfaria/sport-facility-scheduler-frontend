@@ -1,0 +1,1 @@
+export const sxDivider = { margin: '10px 0 20px' }

@@ -7,7 +7,6 @@ import {
   Box,
   Avatar,
   Typography,
-  useTheme,
 } from '@mui/material'
 import { Stack } from '@mui/system'
 import StadiumIcon from '@mui/icons-material/Stadium'
@@ -18,13 +17,20 @@ import * as yup from 'yup'
 import { useUser } from 'providers/user'
 import Link from 'next/link'
 import LoadingButton from '@mui/lab/LoadingButton'
-
 import HowToRegIcon from '@mui/icons-material/HowToReg'
+import {
+  sxAvatar,
+  sxBox,
+  sxButton,
+  sxContainer,
+  sxIcon,
+  sxLoadingButton,
+  sxSpan,
+} from '@/styles/register.styles'
 
 function Register(): ReactElement {
   const [isOwner, setIsOwner] = useState<boolean>(false)
   const { registerUser, isLoading } = useUser()
-  const theme = useTheme()
 
   // Keys must match the api keys
   const initialValues = {
@@ -80,6 +86,8 @@ function Register(): ReactElement {
     formik: FormikHelpers<RegisterProps>
   ): Promise<void> => {
     const res = await registerUser(userData)
+
+    // Display error for specific fields that made user unable to register, eg. email address already in use.
     if (res) {
       for (let err in res) {
         formik.setFieldError(err, res[err]![0])
@@ -98,26 +106,9 @@ function Register(): ReactElement {
     }
 
   return (
-    <Container maxWidth='sm' sx={{ paddingTop: 10 }}>
-      <Box
-        sx={{
-          boxShadow: 1,
-          borderRadius: 1,
-          padding: '20px 40px 50px',
-          background: 'rgba(255, 255, 255, 0.1)',
-          backdropFilter: 'blur(20px)',
-        }}
-      >
-        <Avatar
-          sx={{
-            bgcolor: '#1976d2',
-            margin: '-60px auto',
-            marginBottom: 2,
-            width: '80px',
-            height: '80px',
-            boxShadow: 8,
-          }}
-        >
+    <Container maxWidth='sm' sx={sxContainer}>
+      <Box sx={sxBox}>
+        <Avatar sx={sxAvatar}>
           <HowToRegIcon fontSize='large' />
         </Avatar>
         <Typography variant='h3' mb={4} color='primary'>
@@ -151,23 +142,13 @@ function Register(): ReactElement {
                   exclusive
                   onChange={handleAccountType(setFieldValue)}
                   value={isOwner}
-                  color='primary'
+                  color='info'
                 >
-                  <ToggleButton
-                    value={false}
-                    sx={{
-                      flexGrow: 1,
-                    }}
-                  >
-                    <AccountBoxIcon sx={{ marginRight: 1 }} /> User
+                  <ToggleButton value={false} sx={sxButton}>
+                    <AccountBoxIcon sx={sxIcon} /> User
                   </ToggleButton>
-                  <ToggleButton
-                    value={true}
-                    sx={{
-                      flexGrow: 1,
-                    }}
-                  >
-                    <StadiumIcon sx={{ marginRight: 1 }} /> Facility Owner
+                  <ToggleButton value={true} sx={sxButton}>
+                    <StadiumIcon sx={sxIcon} /> Facility Owner
                   </ToggleButton>
                 </ToggleButtonGroup>
                 <Field
@@ -212,7 +193,7 @@ function Register(): ReactElement {
                 color='primary'
                 type='submit'
                 size='large'
-                sx={{ marginTop: 7, width: '100%' }}
+                sx={sxLoadingButton}
               >
                 Register
               </LoadingButton>
@@ -221,12 +202,9 @@ function Register(): ReactElement {
         </Formik>
         <Typography mt={5}>
           Alrady have an account?
-          <Link
-            href='/login'
-            style={{ marginLeft: '4px', color: theme.palette.primary.main }}
-          >
-            Sing In
-          </Link>
+          <Typography component='span' sx={sxSpan}>
+            <Link href='/login'>Sing In</Link>
+          </Typography>
         </Typography>
       </Box>
     </Container>

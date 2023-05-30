@@ -12,13 +12,15 @@ import TuneIcon from '@mui/icons-material/Tune'
 import { SettingsDrawerProps } from 'interfaces/componentsInterface'
 import { useCourt } from 'providers/courts'
 import { useState } from 'react'
+import { useSchedule } from 'providers/schedule'
 
 const FilterDrawer = ({ isOpen, handleDrawer }: SettingsDrawerProps) => {
   const { getCourtsByLocationAndTime } = useCourt()
+  const { selectedDate } = useSchedule()
   const [sport, setSport] = useState<string>('')
 
   const handleFilter = (): void => {
-    getCourtsByLocationAndTime(sport)
+    getCourtsByLocationAndTime(selectedDate, sport)
     setSport('')
     handleDrawer()
   }

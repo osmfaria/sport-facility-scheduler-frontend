@@ -9,7 +9,7 @@ import {
 } from 'react'
 import { childrenProp } from 'interfaces/utilityInterface'
 import { ColorModeContext } from 'interfaces/providerInterface'
-import { customDarkTheme } from './customDarkTheme'
+import { customDarkTheme, customLightTheme } from './customDarkTheme'
 
 const ColorModeContext = createContext<ColorModeContext>({} as ColorModeContext)
 
@@ -20,8 +20,10 @@ export const ColorModeProvider = ({ children }: childrenProp) => {
     () => ({
       toggleColorMode: (event: SyntheticEvent, value: string) => {
         localStorage.setItem('theme-courtscheduler', JSON.stringify(value))
-        const toggledValue = value === 'dark' ? 'dark' : 'light'
-        setMode(toggledValue)
+        if (value) {
+          const toggledValue = value === 'dark' ? 'dark' : 'light'
+          setMode(toggledValue)
+        }
       },
       mode: mode,
     }),
@@ -37,10 +39,22 @@ export const ColorModeProvider = ({ children }: childrenProp) => {
   const theme = useMemo(
     () =>
       createTheme({
-        palette: {
-          mode,
+        components: {
+          MuiOutlinedInput: {
+            styleOverrides: {
+              input: {
+                '&:-webkit-autofill': {
+                  transition: 'background-color 5000s ease-in-out 0s',
+                },
+              },
+            },
+          },
         },
-        ...(mode === 'dark' ? customDarkTheme : {}),
+        palette: {
+          ...(mode === 'dark'
+            ? { ...customDarkTheme.palette, mode }
+            : { ...customLightTheme.palette, mode }),
+        },
       }),
     [mode]
   )

@@ -10,16 +10,17 @@ import {
 import { Container } from '@mui/system'
 import Link from 'next/link'
 import { ReactElement } from 'react'
+import { sxContainer, sxTypography } from './styles'
 
 const Footer = (): ReactElement => {
   const currentYear = new Date().getFullYear()
   const isMobile = useMediaQuery('(max-width: 600px')
 
   return (
-    <Container maxWidth='lg' sx={{ marginTop: '20px' }}>
+    <Container maxWidth='lg' sx={sxContainer} disableGutters>
       <Divider />
       <Toolbar>
-        <Typography variant='caption' component='div' sx={{ flexGrow: '1' }}>
+        <Typography variant='caption' component='div' sx={sxTypography}>
           &#xa9; {currentYear} - Made with ❤️ by Osmar
         </Typography>
         <Stack direction='row' spacing={isMobile ? 0 : 2}>

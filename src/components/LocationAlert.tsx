@@ -1,9 +1,8 @@
-import { Collapse, Grid, IconButton } from '@mui/material'
+import { Collapse, Grid } from '@mui/material'
 import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import { ReactElement, useState } from 'react'
 import { LocationAlertProps } from 'interfaces/componentsInterface'
-import { useCourt } from 'providers/courts'
 
 const LocationAlert = ({
   handleLocation,

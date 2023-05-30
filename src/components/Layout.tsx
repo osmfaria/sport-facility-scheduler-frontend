@@ -1,4 +1,4 @@
-import { Box, Container, useTheme } from '@mui/material'
+import { Box, useTheme } from '@mui/material'
 import { childrenProp } from 'interfaces/utilityInterface'
 import Footer from './Footer'
 import Header from './Header'
@@ -16,12 +16,18 @@ const Layout = ({ children }: childrenProp) => {
       }}
     >
       <Header />
-      <Container maxWidth='lg' sx={{ minHeight: 'calc(100vh - 149px)' }}>
+      <Box
+        sx={{
+          minHeight: 'calc(100vh - 149px)',
+        }}
+      >
         {children}
-      </Container>
+      </Box>
       <Footer />
     </Box>
   )
 }
 
 export default Layout
+
+

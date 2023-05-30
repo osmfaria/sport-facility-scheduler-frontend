@@ -33,10 +33,18 @@ export default NextAuth({
     maxAge: 60 * 60 * 72,
   },
   callbacks: {
-    async session({ session, user }) {
+    async jwt({ token, user }) {
       if (user) {
-        session.accessToken = user.token
+        return {
+          ...token,
+          accessToken: user.token,
+        }
       }
+      return token
+    },
+    async session({ session, token }) {
+      session.accessToken = token.accessToken
+
       return session
     },
   },

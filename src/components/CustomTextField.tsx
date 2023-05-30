@@ -20,6 +20,7 @@ const CustomTextField = ({
 
   return (
     <TextField
+      autoComplete={type === 'password' ? 'current-password' : ''}
       type={type}
       label={label}
       {...field}
@@ -27,6 +28,7 @@ const CustomTextField = ({
       error={meta.touched && !!meta.error}
       helperText={meta.touched && meta.error}
       InputProps={inputProps}
+      sx={{backgroundColor: 'transparent'}}
     />
   )
 }

@@ -26,3 +26,18 @@ export interface locationComponent {
   short_name: string
   types: string[]
 }
+
+export interface HourCardProp {
+  hour: number
+}
+
+export interface CustomAnimationProp {
+  children: ReactNode
+  direction: 'left' | 'right'
+}
+
+export interface SectionMarkerProp {
+  children: ReactNode
+  firstColor: string
+  secondColor: string
+}

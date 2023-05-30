@@ -6,22 +6,15 @@ import LoginIcon from '@mui/icons-material/Login'
 import SettingsIcon from '@mui/icons-material/Settings'
 import LogoutIcon from '@mui/icons-material/Logout'
 import HowToRegIcon from '@mui/icons-material/HowToReg'
-import { Box, Container, Divider, styled, Tooltip } from '@mui/material'
+import { Box, Container, Divider, Tooltip } from '@mui/material'
 import { Stack } from '@mui/system'
 import { useState } from 'react'
-import SettingsDrawer from './SettingsDrawer'
+import SettingsDrawer from '../SettingsDrawer'
 import { signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
+import { sxAppBar, sxBox, sxIconButton, sxIcon, sxLink, sxLogo } from './styles'
 
 export default function Header() {
-  const glassStyle = {
-    background: 'rgba(255, 255, 255, 0.03)',
-    boxShadow: 'none',
-    WebkitBackdropFilter: 'blur(5px)',
-    backdropFilter: 'blur(5px)',
-    color: 'inherit',
-  }
-
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const handleDrawer = (): void => {
     setIsOpen((state) => !state)
@@ -33,23 +26,22 @@ export default function Header() {
   }
 
   return (
-    <Box sx={{ zIndex: 10, paddingBottom: '64px' }} position='sticky'>
+    <Box sx={sxBox}>
       <SettingsDrawer isOpen={isOpen} handleDrawer={handleDrawer} />
-      <AppBar sx={glassStyle}>
-        <Container maxWidth='lg'>
+      <AppBar sx={sxAppBar}>
+        <Container maxWidth='lg' disableGutters>
           <Toolbar>
             <Typography
               variant='h6'
               color='primary'
               component='div'
-              sx={{ flexGrow: 1 }}
+              sx={sxLogo}
             >
-              <Link
-                href='/'
-                style={{ textDecoration: 'none', color: 'inherit' }}
-              >
-                Court-Scheduler
-              </Link>
+              <Tooltip title='home'>
+                <Link href='/' style={sxLink}>
+                  Schedule & Play
+                </Link>
+              </Tooltip>
             </Typography>
             <Stack spacing={1} direction='row'>
               {!!session ? (
@@ -57,39 +49,24 @@ export default function Header() {
                   <IconButton
                     onClick={handleSignOut}
                     color='primary'
-                    sx={(theme) => ({
-                      borderRadius: '10px',
-                      border: `1px solid  ${theme.palette.divider}`,
-                    })}
+                    sx={sxIconButton}
                   >
-                    <LogoutIcon sx={{ height: '20px', width: '20px' }} />
+                    <LogoutIcon sx={sxIcon} />
                   </IconButton>
                 </Tooltip>
               ) : (
                 <>
                   <Tooltip title='Sign in'>
                     <Link href='/login'>
-                      <IconButton
-                        color='primary'
-                        sx={(theme) => ({
-                          borderRadius: '10px',
-                          border: `1px solid  ${theme.palette.divider}`,
-                        })}
-                      >
-                        <LoginIcon sx={{ height: '20px', width: '20px' }} />
+                      <IconButton color='primary' sx={sxIconButton}>
+                        <LoginIcon sx={sxIcon} />
                       </IconButton>
                     </Link>
                   </Tooltip>
                   <Tooltip title='Sign up'>
                     <Link href='/register'>
-                      <IconButton
-                        color='primary'
-                        sx={(theme) => ({
-                          borderRadius: '10px',
-                          border: `1px solid  ${theme.palette.divider}`,
-                        })}
-                      >
-                        <HowToRegIcon sx={{ height: '20px', width: '20px' }} />
+                      <IconButton color='primary' sx={sxIconButton}>
+                        <HowToRegIcon sx={sxIcon} />
                       </IconButton>
                     </Link>
                   </Tooltip>
@@ -99,13 +76,10 @@ export default function Header() {
               <Tooltip title='Settings'>
                 <IconButton
                   color='primary'
-                  sx={(theme) => ({
-                    borderRadius: '10px',
-                    border: `1px solid  ${theme.palette.divider}`,
-                  })}
+                  sx={sxIconButton}
                   onClick={handleDrawer}
                 >
-                  <SettingsIcon sx={{ height: '20px', width: '20px' }} />
+                  <SettingsIcon sx={sxIcon} />
                 </IconButton>
               </Tooltip>
             </Stack>
