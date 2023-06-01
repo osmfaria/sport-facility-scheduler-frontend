@@ -2,7 +2,11 @@ import { getToken } from 'next-auth/jwt'
 import { NextRequest, NextResponse } from 'next/server'
 export async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname
-  const protectedPaths = [/^\/dashboard\/.*/, /^\/courts\/.*/]
+  const protectedPaths = [
+    /^\/dashboard\/.*/,
+    /^\/courts\/.*/,
+    /^\/facilities\/.*/,
+  ]
   const isPathProtected = protectedPaths?.some((path) => path.test(pathname))
   const res = NextResponse.next()
   if (isPathProtected) {

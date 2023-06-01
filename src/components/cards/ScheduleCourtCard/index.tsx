@@ -31,12 +31,18 @@ import {
   sxCard,
   sxDivider,
 } from './styles'
+import { useRouter } from 'next/router'
 
 function ScheduleCourtCard() {
   const { court } = useCourt()
   const startingHour = convertToHour(court!.opening_hour)
   const closingHour = convertToHour(court!.closing_hour)
   const price = convertToCurrency(court!.price_by_hour)
+  const router = useRouter()
+
+  const handleClick = () => {
+    router.push(`/facilities/${court!.sport_facility.id}`)
+  }
 
   return (
     <Card sx={sxCard}>
@@ -44,7 +50,12 @@ function ScheduleCourtCard() {
       <Divider sx={sxDivider} />
       <CardActions sx={sxCardAction}>
         <Tooltip title='Explore other sports venues within this facility'>
-          <Button variant='contained' endIcon={<OpenInNew />} sx={sxButton}>
+          <Button
+            variant='contained'
+            endIcon={<OpenInNew />}
+            sx={sxButton}
+            onClick={() => handleClick()}
+          >
             {court!.sport_facility.name}
           </Button>
         </Tooltip>

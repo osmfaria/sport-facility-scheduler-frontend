@@ -1,5 +1,4 @@
-import { Theme } from '@mui/material'
-import { ChangeEvent, Dispatch, SetStateAction, SyntheticEvent } from 'react'
+import { SyntheticEvent } from 'react'
 import {
   LoginUserProps,
   RegisterAxiosError,
@@ -41,6 +40,26 @@ export interface Address {
   zipcode: string
   state: string
   map_image: string
+}
+
+export interface Facility {
+  id: string
+  user: {
+    username: string
+    email: string
+  }
+  name: string
+  email: string
+  phone_number: string
+  address: {
+    id: string
+    street: string
+    number: string
+    city: string
+    zipcode: string
+    state: string
+    map_image: string
+  }
 }
 
 export interface CourtProviderContext {
@@ -93,8 +112,14 @@ export interface ScheduleProviderContext {
 
 export interface FacilityProviderContext {
   getAddress: (facilityId: string) => Promise<void>
+  getFacility: (facilityId: string, token: string) => Promise<void>
+  getFacilityCourts: (facilityId: string, token: string) => Promise<void>
+  courtsByFacility: Court[]
+  facility: Facility | undefined
   address: Address | undefined
   isLoadingAddress: boolean
+  isLoadingFacility: boolean
+  isLoadingCourtsByFacility: boolean
   addressString: string
 }
 
