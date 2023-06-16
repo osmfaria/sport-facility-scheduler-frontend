@@ -20,17 +20,14 @@ import { default as NextLink } from 'next/link'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { LoadingButton } from '@mui/lab'
-import {
-  sxAvatar,
-  sxBox,
-  sxContainer,
-} from '@/styles/login.styles'
+import { sxAvatar, sxBox, sxContainer } from '@/styles/login.styles'
 
 function Login(): ReactElement {
   const [isLoading, setIsLoading] = useState<boolean>()
   const [showPassword, setShowPassword] = useState<boolean>()
   const router = useRouter()
   const theme = useTheme()
+  const callbackUrl = router.query.callbackUrl
 
   const initialValues = {
     username: '',
@@ -54,7 +51,8 @@ function Login(): ReactElement {
     })
     if (res && !res.error) {
       // Redirect to the desired page after successful login
-      router.push('/')
+      if (callbackUrl) router.push(callbackUrl as string)
+      else router.push('/')
       setIsLoading(false)
     } else {
       setIsLoading(false)
@@ -134,7 +132,7 @@ function Login(): ReactElement {
           </Form>
         </Formik>
         <Typography mt={5}>
-          Don't have an account?
+          Don&apos;t have an account?
           <Typography
             component='span'
             color={theme.palette.primary.main}

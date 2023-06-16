@@ -12,7 +12,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
-import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from 'react'
+import { FormEvent, KeyboardEvent, useEffect, useState } from 'react'
 import LocationAlert from '../../components/LocationAlert'
 import axios from 'axios'
 import { locationComponent } from 'interfaces/componentsInterface'
@@ -29,7 +29,9 @@ import { containerStyles, inputStyles } from '@/styles/courts.styles'
 
 export default function Home() {
   const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false)
+  const [isLocationShared, setIsLocationShared] = useState<boolean>(false)
   const { selectDate, selectedDate } = useSchedule()
+
   const {
     getCourtsByLocationAndTime,
     courts,
@@ -41,12 +43,21 @@ export default function Home() {
 
   useEffect(() => {
     selectCurrentStep(0)
+
+    const storedCity = JSON.parse(
+      localStorage.getItem('location-courtscheduler') || '""'
+    )
+    if (storedCity) selectCity(storedCity)
+
+    const privacySettings = JSON.parse(
+      localStorage.getItem('location-sharing') || '"yes"'
+    )
+
+    setIsLocationShared(privacySettings === 'yes')
   }, [])
 
   useEffect(() => {
-    if(city.length > 0) {
-      getCourtsByLocationAndTime(selectedDate)
-    }
+    getCourtsByLocationAndTime(selectedDate)
   }, [selectedDate])
 
   const handleLocation = () => {
@@ -74,6 +85,11 @@ export default function Home() {
           .catch((_) => selectCity('vancouver'))
       })
     }
+  }
+
+  const handlePrivacy = () => {
+    localStorage.setItem('location-sharing', JSON.stringify('no'))
+    setIsLocationShared(false)
   }
 
   const handleDate = (dateObj: dayjs.Dayjs | null) => {
@@ -108,7 +124,12 @@ export default function Home() {
       <Container sx={containerStyles}>
         <FilterDrawer isOpen={isFilterOpen} handleDrawer={handleFilterDrawer} />
         <CustomStepper />
-        {city.length === 0 && <LocationAlert handleLocation={handleLocation} />}
+        {isLocationShared && city.length == 0 && (
+          <LocationAlert
+            handleLocation={handleLocation}
+            handlePrivacy={handlePrivacy}
+          />
+        )}
         <form onSubmit={handleSearch}>
           <Grid
             container
@@ -175,7 +196,7 @@ export default function Home() {
           </Grid>
         </form>
 
-        <CourtsGrid />
+        <CourtsGrid source='schedule' />
       </Container>
     </>
   )

@@ -19,7 +19,7 @@ export default NextAuth({
       async authorize(credentials) {
         const user = await loginUser(credentials)
         if (user) {
-          return { token: user.token }
+          return { ...user }
         }
         throw new Error('Invalid email or password')
       },
@@ -36,16 +36,23 @@ export default NextAuth({
     async jwt({ token, user }) {
       if (user) {
         return {
-          ...token,
-          accessToken: user.token,
+          ...user,
         }
       }
       return token
     },
     async session({ session, token }) {
-      session.accessToken = token.accessToken
-
-      return session
+      const updatedSession = {
+        ...session,
+        user: {
+          accessToken: token.token,
+          username: token.username,
+          id: token.id,
+          is_owner: token.is_owner,
+          email: token.email,
+        }
+      }
+      return updatedSession
     },
   },
 })

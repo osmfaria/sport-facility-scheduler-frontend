@@ -7,6 +7,7 @@ import { sxCollapse } from './styles'
 
 const LocationAlert = ({
   handleLocation,
+  handlePrivacy,
 }: LocationAlertProps): ReactElement => {
   const [isOpen, setIsOpen] = useState<boolean>(true)
 
@@ -29,7 +30,10 @@ const LocationAlert = ({
             <Button
               color='inherit'
               size='small'
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                setIsOpen(false)
+                handlePrivacy()
+              }}
             >
               Block
             </Button>

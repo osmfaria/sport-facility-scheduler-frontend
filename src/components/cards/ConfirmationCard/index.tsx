@@ -34,7 +34,6 @@ const ConfirmationCard = () => {
   const { addressString } = useFacility()
   const { bookingConfirmation } = useSchedule()
 
-  console.log(bookingConfirmation)
   const datetimeDayjs = dayjs(bookingConfirmation!.datetime)
   const date = datetimeDayjs.format('MMMM Do, YYYY')
   const time = datetimeDayjs.utc().format('h:mm a')

@@ -16,6 +16,16 @@ export const sxBox: SxProps = {
   padding: '0 10px',
 }
 
-export const sxStack: SxProps = { padding: '15px 10px' }
+export const sxStack: SxProps = { padding: '0 10px' }
 
 export const sxToggleButton: SxProps = { flexGrow: '1' }
+
+export const sxListText: SxProps = {
+  width: '140px',
+  whiteSpace: 'nowrap',
+  textOverflow: 'ellipsis',
+  overflow: 'hidden',
+  display: 'inline-block',
+}
+
+export const sxLink = { textDecoration: 'none', color: 'inherit' }

@@ -11,7 +11,7 @@ import CalendarCard from '../../../components/cards/CalendarCard'
 import CustomStepper from '../../../components/Misc/CustomStepper'
 import { useSteps } from 'providers/StepsProvider'
 import { ArrowCircleLeftOutlined } from '@mui/icons-material'
-import { buttonStyles, containerStyles } from '@/styles/booking.styles'
+import { buttonStyles, containerStyles } from '../../../styles/booking.styles'
 dayjs.extend(advancedFormat)
 
 const Booking = () => {

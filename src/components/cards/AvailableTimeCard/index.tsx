@@ -42,7 +42,7 @@ const AvailableTimeCard = () => {
   }
 
   const handleBooking = async (): Promise<void> => {
-    const accessToken = (session as CustomSession).accessToken
+    const accessToken = (session as CustomSession).user.accessToken
     const res = await bookCourt(courtid as string, numberOfHours, accessToken!)
     if (res === 201) {
       router.push('/courts/7ac5dcb2-4d69-40b8-a090-4b95839c4ee4/confirmation')
@@ -54,6 +54,8 @@ const AvailableTimeCard = () => {
   useEffect(() => {
     setNumberOfHours(1)
   }, [timeSlotRange])
+
+  console.log('court schedule: ', courtSchedule)
 
   return (
     <Paper sx={sxPaper}>

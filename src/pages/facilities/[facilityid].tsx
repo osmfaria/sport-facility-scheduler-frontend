@@ -21,7 +21,7 @@ const Facility = () => {
 
   useEffect(() => {
     if (session) {
-      const accessToken = (session as CustomSession).accessToken
+      const accessToken = (session as CustomSession).user.accessToken
       getFacility(facilityid as string, accessToken!)
       getFacilityCourts(facilityid as string, accessToken!)
     }

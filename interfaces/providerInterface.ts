@@ -4,6 +4,8 @@ import {
   RegisterAxiosError,
   RegisterProps,
 } from './registerInterface'
+import { StringMappingType } from 'typescript'
+import { FacilityRegisterProp, RegisterFacilityAxiosError } from './facilityInterface'
 
 export interface UserProviderContext {
   registerUser: (user: RegisterProps) => Promise<RegisterAxiosError | undefined>
@@ -14,6 +16,12 @@ export interface UserProviderContext {
 export interface ColorModeContext {
   toggleColorMode: (event: SyntheticEvent, value: string) => void
   mode: 'light' | 'dark'
+}
+
+interface NonOperatingDays {
+  id: StringMappingType
+  regular_day_off: string
+  court: string
 }
 
 export interface Court {
@@ -30,6 +38,7 @@ export interface Court {
   sport: string
   opening_hour: string
   closing_hour: string
+  non_operating_days: NonOperatingDays[]
 }
 
 export interface Address {
@@ -53,12 +62,38 @@ export interface Facility {
   phone_number: string
   address: {
     id: string
-    street: string
-    number: string
+    address1: string
+    address2: string
     city: string
     zipcode: string
     state: string
+    country: string
     map_image: string
+  }
+  courts: Court[]
+}
+
+export interface RawCourtEvent {
+  id: string
+  datetime: string
+  number_of_hours: number
+  user: {
+    username: string
+    email: string
+  }
+  court: {
+    name: string
+    price_by_hour: string
+  }
+}
+
+export interface CourtEvent {
+  id: string
+  start: string
+  end: string
+  title: string
+  extendedProps: {
+    email: string
   }
 }
 
@@ -108,19 +143,35 @@ export interface ScheduleProviderContext {
   ) => Promise<number>
   bookingConfirmation: BookingResponse | undefined
   isLoadingBooking: boolean
+  getCourtEvents: (
+    token: string,
+    courtId: string,
+    initialDate: string,
+    finalDate: string
+  ) => Promise<void>
+  courtEvents: CourtEvent[]
+  resetCourtEvents: () => void
 }
 
 export interface FacilityProviderContext {
   getAddress: (facilityId: string) => Promise<void>
   getFacility: (facilityId: string, token: string) => Promise<void>
   getFacilityCourts: (facilityId: string, token: string) => Promise<void>
+  getFacilitiesByOwner: (token: string) => Promise<void>
+  facilitiesByOwner: Facility[] | undefined
   courtsByFacility: Court[]
   facility: Facility | undefined
   address: Address | undefined
   isLoadingAddress: boolean
   isLoadingFacility: boolean
   isLoadingCourtsByFacility: boolean
+  isLoadingFacilityByOwner: boolean
   addressString: string
+  createFacility: (
+    token: string,
+    data: FacilityRegisterProp
+  ) => Promise<RegisterFacilityAxiosError>
+  isLoading: boolean
 }
 
 export interface StepsProviderContext {

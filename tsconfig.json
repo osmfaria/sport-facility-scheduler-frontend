@@ -19,19 +19,22 @@
     "paths": {
       "@/*": ["./src/*"],
       "@/components/*": ["components/*"]
-    }
+    },
+    "types": ["@types/google.maps"]
   },
   "include": [
     "next-env.d.ts",
+    "index.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "./__test__/pages/register.test.tsx",
     "@testing-library/jest-dom",
     "jest.config.ts",
-    "next-auth.d.ts",
+    "types/next-auth.d.ts",
     "global.d.ts",
     "**/*.test.tsx",
-    "src/pages/api/auth/[...nextauth].js"
+    "src/pages/api/auth/[...nextauth].js",
+    "src/pages/dashboard/facilitymanager/newfacility/teste.tsx"
   ],
   "exclude": ["node_modules", "cypress.config.ts"]
 }

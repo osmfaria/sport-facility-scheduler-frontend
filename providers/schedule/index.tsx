@@ -1,6 +1,9 @@
+import { capitalize } from '@/utils/functions'
 import dayjs from 'dayjs'
 import {
   BookingResponse,
+  CourtEvent,
+  RawCourtEvent,
   ScheduleProviderContext,
 } from 'interfaces/providerInterface'
 import { childrenProp } from 'interfaces/utilityInterface'
@@ -21,6 +24,7 @@ export const ScheduleProvider = ({ children }: childrenProp) => {
   const [bookingConfirmation, setBookingConfirmation] = useState<
     BookingResponse | undefined
   >()
+  const [courtEvents, setCourtEvents] = useState<CourtEvent[]>([])
 
   const selectTimeSlot = (newSelectedHour: number): void => {
     // Make sure only one hour can be selected at time
@@ -121,6 +125,54 @@ export const ScheduleProvider = ({ children }: childrenProp) => {
     return response
   }
 
+  const getCourtEvents = async (
+    token: string,
+    courtId: string,
+    initialDate: string,
+    finalDate: string
+  ) => {
+    API.get(
+      `sport_facilities/courts/${courtId}/management/${initialDate}/${finalDate}/`,
+      {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      }
+    )
+      .then((res) => formatEvents(res.data))
+      .catch((err) => console.log(err))
+  }
+
+  const formatEvents = (events: RawCourtEvent[]) => {
+    let durationTrack = 0
+    const eventList = events.reduce<CourtEvent[]>((acc, cur) => {
+      if (durationTrack === 0) {
+        const event = {
+          id: cur.id,
+          title: capitalize(cur.user.username),
+          start: cur.datetime,
+          end: dayjs(cur.datetime)
+            .add(cur.number_of_hours, 'hour')
+            .toISOString(),
+          extendedProps: {
+            email: cur.user.email,
+          },
+        }
+        acc.push(event)
+        durationTrack = cur.number_of_hours - 1
+      } else {
+        durationTrack--
+      }
+      return acc
+    }, [])
+
+    setCourtEvents(eventList)
+  }
+
+  const resetCourtEvents = () => {
+    setCourtEvents([])
+  }
+
   return (
     <ScheduleContext.Provider
       value={{
@@ -135,6 +187,9 @@ export const ScheduleProvider = ({ children }: childrenProp) => {
         bookCourt,
         bookingConfirmation,
         isLoadingBooking,
+        getCourtEvents,
+        courtEvents,
+        resetCourtEvents,
       }}
     >
       {children}

@@ -1,4 +1,5 @@
 import { capitalize } from '@/utils/functions'
+import { FacilityRegisterProp } from 'interfaces/facilityInterface'
 import { Court } from 'interfaces/providerInterface'
 import {
   Address,
@@ -6,6 +7,7 @@ import {
   FacilityProviderContext,
 } from 'interfaces/providerInterface'
 import { childrenProp } from 'interfaces/utilityInterface'
+import { useRouter } from 'next/router'
 import { createContext, useContext, useState } from 'react'
 import API from 'services/api'
 
@@ -22,6 +24,11 @@ export const FacilityProvider = ({ children }: childrenProp) => {
   const [facility, setFacility] = useState<Facility>()
   const [courtsByFacility, setCourtsByFacility] = useState<Court[]>([])
   const [addressString, setAddressString] = useState<string>('')
+  const [facilitiesByOwner, setIsFacilitiesByOwner] = useState<Facility[]>()
+  const [isLoadingFacilityByOwner, setIsLoadingFacilityByOwner] =
+    useState<boolean>(true)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const router = useRouter()
 
   const getAddress = async (facilityId: string): Promise<void> => {
     setIsLoadingAddress(true)
@@ -44,7 +51,6 @@ export const FacilityProvider = ({ children }: childrenProp) => {
     facilityId: string,
     token: string
   ): Promise<void> => {
-    console.log('token: ', token)
     API.get(`sport_facilities/${facilityId}/`, {
       headers: {
         Authorization: `Token ${token}`,
@@ -83,6 +89,38 @@ export const FacilityProvider = ({ children }: childrenProp) => {
       })
   }
 
+  const getFacilitiesByOwner = async (token: string): Promise<void> => {
+    setIsLoadingFacilityByOwner(true)
+    API.get('sport_facilities/filter/', {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    })
+      .then((res) => {
+        setIsFacilitiesByOwner(res.data)
+        setIsLoadingFacilityByOwner(false)
+      })
+      .catch((err) => {
+        console.log(err)
+        setIsLoadingFacilityByOwner(false)
+      })
+  }
+
+  const createFacility = async (token: string, data: FacilityRegisterProp) => {
+    setIsLoading(true)
+    const res = await API.post('sport_facilities/', data, {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    })
+      .then((_) => router.push('/dashboard'))
+      .catch((err) => console.log(err))
+      .catch((err) => err.response.data)
+      .finally(() => setIsLoading(false))
+
+    return res
+  }
+
   return (
     <FacilityContext.Provider
       value={{
@@ -96,6 +134,11 @@ export const FacilityProvider = ({ children }: childrenProp) => {
         facility,
         getFacility,
         isLoadingCourtsByFacility,
+        getFacilitiesByOwner,
+        facilitiesByOwner,
+        isLoadingFacilityByOwner,
+        createFacility,
+        isLoading
       }}
     >
       {children}

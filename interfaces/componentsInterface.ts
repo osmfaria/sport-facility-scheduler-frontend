@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import { EventClickArg } from '@fullcalendar/core'
 
 export interface LoadingBackdropProps {
   isLoading: boolean
@@ -19,6 +20,7 @@ export interface SettingsDrawerProps {
 
 export interface LocationAlertProps {
   handleLocation: () => void
+  handlePrivacy: () => void
 }
 
 export interface locationComponent {
@@ -40,4 +42,16 @@ export interface SectionMarkerProp {
   children: ReactNode
   firstColor: string
   secondColor: string
+}
+
+export interface CancelEventCardProps {
+  isOpen: boolean
+  handleClose: () => void
+  eventData: EventClickArg
+}
+
+export interface FullcalendarProps {
+  startTime: string
+  endTime: string
+  daysOfWeek: number[]
 }
