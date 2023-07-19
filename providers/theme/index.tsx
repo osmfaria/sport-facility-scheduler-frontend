@@ -42,7 +42,7 @@ export const ColorModeProvider = ({ children }: childrenProp) => {
         typography: {
           button: {
             textTransform: 'none',
-            fontWeight: '500',
+            fontWeight: '600',
           },
         },
         components: {
@@ -58,8 +58,22 @@ export const ColorModeProvider = ({ children }: childrenProp) => {
         },
         palette: {
           ...(mode === 'dark'
-            ? { ...customDarkTheme.palette, mode }
-            : { ...customLightTheme.palette, mode }),
+            ? {
+                ...customDarkTheme.palette,
+                mode,
+                calendarGroupButton: {
+                  primary: 'rgba(255, 255, 255, 0.12)',
+                  secondary: 'rgba(51, 51, 51, 0.12)',
+                },
+              }
+            : {
+                ...customLightTheme.palette,
+                mode,
+                calendarGroupButton: {
+                  primary: 'rgba(0, 0, 0, 0.12)',
+                  secondary: 'rgba(255, 255, 255, 0.16)',
+                },
+              }),
         },
       }),
     [mode]

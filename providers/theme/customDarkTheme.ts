@@ -1,4 +1,7 @@
-import { CustomDarkThemeConfig, CustomLightThemeConfig } from 'interfaces/providerInterface'
+import {
+  CustomDarkThemeConfig,
+  CustomLightThemeConfig,
+} from 'interfaces/providerInterface'
 
 export const customDarkTheme: CustomDarkThemeConfig = {
   palette: {

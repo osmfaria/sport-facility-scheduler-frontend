@@ -11,6 +11,7 @@ import { FullcalendarProps } from 'interfaces/componentsInterface'
 import { courtOperatingDays } from '@/utils/functions'
 import HolidayCard from '../cards/HolidayCard'
 import CancelHolidayCard from '../cards/CancelHolidayCard'
+import { sxCalendarWrap } from './styles'
 
 const FullCalendarView = ({ chosenCourt }: FullcalendarProps) => {
   const { courtEvents } = useSchedule()
@@ -76,28 +77,30 @@ const FullCalendarView = ({ chosenCourt }: FullcalendarProps) => {
         />
       )}
 
-      <FullCalendar
-        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        timeZone={'UTC'}
-        initialView='dayGridMonth'
-        headerToolbar={{
-          start: 'title',
-          center: 'dayGridMonth,timeGridWeek,timeGridDay',
-          end: 'today prev,next',
-        }}
-        events={courtEvents}
-        businessHours={{
-          daysOfWeek,
-          startTime,
-          endTime,
-        }}
-        rerenderDelay={100}
-        allDaySlot={false}
-        eventClick={handleEvent}
-        dateClick={handleDate}
-        editable
-        dragScroll={false}
-      />
+      <Box sx={sxCalendarWrap}>
+        <FullCalendar
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          timeZone={'UTC'}
+          initialView='dayGridMonth'
+          headerToolbar={{
+            start: 'title',
+            center: 'dayGridMonth,timeGridWeek,timeGridDay',
+            end: 'prev,next',
+          }}
+          events={courtEvents}
+          businessHours={{
+            daysOfWeek,
+            startTime,
+            endTime,
+          }}
+          rerenderDelay={100}
+          allDaySlot={false}
+          eventClick={handleEvent}
+          dateClick={handleDate}
+          editable
+          dragScroll={false}
+        />
+      </Box>
     </Box>
   )
 }
