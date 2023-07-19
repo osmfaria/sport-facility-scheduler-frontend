@@ -21,4 +21,32 @@ export interface RegisterAxiosError {
   [key: string]: string[] | undefined 
 }
 
+export interface UpdateUserAxiosError {
+  username?: string
+}
+
+export interface UpdateUserProps {
+  username: string
+  first_name: string
+  last_name: string
+  email:string
+}
+
+interface Event {
+  datetime: string
+  court: string
+} 
+
+export interface UserProps {
+  id: string
+  username: string
+  email: string
+  first_name: string
+  last_name: string
+  current_schedules: Event[]
+  schedule_history: Event[]
+  is_owner: boolean
+  date_joined: string
+}
+
 export type SetFieldValueType = FormikProps<any>['setFieldValue']

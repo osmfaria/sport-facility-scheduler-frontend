@@ -23,6 +23,7 @@ import useGooglePlaceAutoComplete from 'services/google_place_autocomplete'
 import { useFacility } from 'providers/FacilityProvider'
 import { useSession } from 'next-auth/react'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 function NewFacility(): ReactElement {
   const [latlng, setLatlng] = useState<string>('')
@@ -42,7 +43,7 @@ function NewFacility(): ReactElement {
         `https://maps.googleapis.com/maps/api/timezone/json?location=${latlng}&timestamp=${unixTimestamp}&key=${ApiKey}`
       )
       .then((res) => res.data)
-      .catch((err) => console.log(err))
+      .catch((_) => toast.warning('Select an address from the drop down'))
 
     if (timezone && timezone.status === 'OK') return timezone.timeZoneId
     else return 'America/New_York'
@@ -150,7 +151,9 @@ function NewFacility(): ReactElement {
     if (res) {
       for (let err in res) {
         const errorMessage = Array.isArray(res[err]) ? res[err]![0] : res[err]
-        formik.setFieldError(err, errorMessage as string)
+        if (err === 'address')
+          formik.setFieldError('address1', errorMessage as string)
+        else formik.setFieldError(err, errorMessage as string)
       }
     }
   }

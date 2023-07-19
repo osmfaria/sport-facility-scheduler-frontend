@@ -1,9 +1,12 @@
 import { Avatar, Box, Divider, IconButton, Stack, Typography } from '@mui/material'
 import { sxAvatar, sxBox } from './styles'
 import { AddCircleOutline, DomainDisabledOutlined } from '@mui/icons-material'
+import { useRouter } from 'next/router'
 
 
 const NoCourtsByFacilityCard = () => {
+  const router = useRouter()
+
   return (
     <Box sx={sxBox}>
       <Stack
@@ -25,7 +28,10 @@ const NoCourtsByFacilityCard = () => {
             <Typography variant='body2' color='GrayText'>
               You can add venues here
             </Typography>
-            <IconButton color='success'>
+            <IconButton
+              color='success'
+              onClick={() => router.push('/dashboard/courtmanager/newcourt')}
+            >
               <AddCircleOutline />
             </IconButton>
           </Stack>

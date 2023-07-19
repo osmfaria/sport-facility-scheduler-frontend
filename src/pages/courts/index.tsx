@@ -176,7 +176,7 @@ export default function Home() {
                         )}
                       </IconButton>
                       <>
-                        {!!courts.length && !isFilterOpen && (
+                        {courts && !!courts.length && !isFilterOpen && (
                           <Zoom in={!!courts.length && !isFilterOpen}>
                             <IconButton
                               color='primary'

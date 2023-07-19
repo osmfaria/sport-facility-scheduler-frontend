@@ -39,6 +39,12 @@ export const ColorModeProvider = ({ children }: childrenProp) => {
   const theme = useMemo(
     () =>
       createTheme({
+        typography: {
+          button: {
+            textTransform: 'none',
+            fontWeight: '500',
+          },
+        },
         components: {
           MuiOutlinedInput: {
             styleOverrides: {

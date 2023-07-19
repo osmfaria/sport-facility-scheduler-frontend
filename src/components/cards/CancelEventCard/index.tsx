@@ -23,6 +23,10 @@ import utc from 'dayjs/plugin/utc'
 import { capitalize } from '@/utils/functions'
 import { sxList } from './styles'
 import { CancelEventCardProps } from 'interfaces/componentsInterface'
+import { useSchedule } from 'providers/schedule'
+import { useSession } from 'next-auth/react'
+import { LoadingButton } from '@mui/lab'
+import { useFacility } from 'providers/FacilityProvider'
 
 const CancelEventCard = ({
   isOpen,
@@ -30,13 +34,27 @@ const CancelEventCard = ({
   eventData,
 }: CancelEventCardProps) => {
   dayjs.extend(utc)
-  
-  const eventDate = dayjs.utc(eventData.event.start).format('YYYY/MM/DD').toString()
+  const { cancelBooking, isLoading, selectEvents, courtEvents } = useSchedule()
+  const { data: session } = useSession()
+
+  const eventDate = dayjs
+    .utc(eventData.event.start)
+    .format('YYYY/MM/DD')
+    .toString()
   const start = dayjs.utc(eventData.event.start).format('h A')
   const end = dayjs.utc(eventData.event.end).format('h A')
   const clientName = capitalize(eventData.event.title)
   const clientEmail = eventData.event.extendedProps.email
-  console.log(eventData.event.start)
+  const eventId = eventData.event.id
+
+  const handleCancelation = async () => {
+    const token = session!.user.accessToken
+    await cancelBooking(token, eventId)
+
+    const updatedEvents = courtEvents.filter((event) => event.id !== eventId)
+    selectEvents(updatedEvents)
+    handleClose()
+  }
 
   return (
     <Dialog open={isOpen} onClose={handleClose}>
@@ -75,12 +93,19 @@ const CancelEventCard = ({
       </DialogContent>
 
       <DialogActions>
-        <Button variant='text' color='error' startIcon={<DeleteOutline />}>
-          Cancel Reservation
-        </Button>
         <Button variant='outlined' onClick={handleClose}>
           Go back
         </Button>
+        <LoadingButton
+          loading={isLoading}
+          loadingPosition='start'
+          onClick={handleCancelation}
+          variant='text'
+          color='error'
+          startIcon={<DeleteOutline />}
+        >
+          Cancel Reservation
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   )

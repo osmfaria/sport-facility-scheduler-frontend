@@ -72,16 +72,18 @@ const SettingsDrawer = ({ isOpen, handleDrawer }: SettingsDrawerProps) => {
           <List>
             {!!session && (
               <>
-                <ListItem>
-                  <ListItemIcon>
-                    <AccountCircle />
-                  </ListItemIcon>
-                  <ListItemText
-                    secondaryTypographyProps={{ sx: sxListText }}
-                    primary={session!.user.username}
-                    secondary={session!.user.email}
-                  />
-                </ListItem>
+                <Link href='/profile' style={sxLink}>
+                  <ListItemButton onClick={handleDrawer}>
+                    <ListItemIcon>
+                      <AccountCircle />
+                    </ListItemIcon>
+                    <ListItemText
+                      secondaryTypographyProps={{ sx: sxListText }}
+                      primary={session!.user.username}
+                      secondary={session!.user.email}
+                    />
+                  </ListItemButton>
+                </Link>
 
                 {session.user.is_owner && (
                   <Link href='/dashboard' style={sxLink}>

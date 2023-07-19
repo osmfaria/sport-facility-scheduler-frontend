@@ -2,42 +2,80 @@ import FullCalendar from '@fullcalendar/react'
 import { EventClickArg } from '@fullcalendar/core'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import interactionPlugin from '@fullcalendar/interaction'
+import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction'
 import { Box } from '@mui/material'
 import { useSchedule } from 'providers/schedule'
 import { useState } from 'react'
 import CancelEventCard from '../cards/CancelEventCard'
 import { FullcalendarProps } from 'interfaces/componentsInterface'
+import { courtOperatingDays } from '@/utils/functions'
+import HolidayCard from '../cards/HolidayCard'
+import CancelHolidayCard from '../cards/CancelHolidayCard'
 
-const FullCalendarView = ({
-  startTime,
-  endTime,
-  daysOfWeek,
-}: FullcalendarProps) => {
+const FullCalendarView = ({ chosenCourt }: FullcalendarProps) => {
   const { courtEvents } = useSchedule()
-  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [isOpenEvent, setIsOpenEvent] = useState<boolean>(false)
+  const [isOpenDate, setIsOpenDate] = useState<boolean>(false)
+  const [isOpenCancelDate, setIsOpenCancelDate] = useState<boolean>(false)
   const [eventData, setEventData] = useState<EventClickArg>()
+  const [dateData, setDateData] = useState<DateClickArg>()
+  const startTime = chosenCourt.opening_hour
+  const endTime = chosenCourt.closing_hour
+  const daysOfWeek = courtOperatingDays(chosenCourt)
 
-  const handleClose = () => {
-    setIsOpen(false)
+  const handleCloseEvent = () => {
+    setIsOpenEvent(false)
+  }
+
+  const handleCloseDate = () => {
+    setIsOpenDate(false)
+  }
+
+  const handleCloseCancelDate = () => {
+    setIsOpenCancelDate(false)
   }
 
   const handleEvent = (e: EventClickArg) => {
+    const title = e.event._def.title
     setEventData(e)
-    setIsOpen(true)
+    if (title === 'Holiday') {
+      setIsOpenCancelDate(true)
+    } else {
+      setIsOpenEvent(true)
+    }
   }
 
-  console.log(courtEvents)
+  const handleDate = (e: DateClickArg) => {
+    setDateData(e)
+    setIsOpenDate(true)
+  }
 
   return (
     <Box>
       {eventData && (
         <CancelEventCard
-          isOpen={isOpen}
-          handleClose={handleClose}
+          isOpen={isOpenEvent}
+          handleClose={handleCloseEvent}
           eventData={eventData!}
         />
       )}
+      {dateData && (
+        <HolidayCard
+          isOpen={isOpenDate}
+          handleClose={handleCloseDate}
+          dateData={dateData}
+          courtId={chosenCourt.id}
+        />
+      )}
+      {eventData && (
+        <CancelHolidayCard
+          isOpen={isOpenCancelDate}
+          handleClose={handleCloseCancelDate}
+          eventData={eventData!}
+          courtId={chosenCourt.id}
+        />
+      )}
+
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         timeZone={'UTC'}
@@ -53,9 +91,12 @@ const FullCalendarView = ({
           startTime,
           endTime,
         }}
+        rerenderDelay={100}
         allDaySlot={false}
         eventClick={handleEvent}
+        dateClick={handleDate}
         editable
+        dragScroll={false}
       />
     </Box>
   )

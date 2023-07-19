@@ -48,11 +48,26 @@ export const weekDayNumber: WeekDayNumber = {
 
 export const courtOperatingDays = (court: Court | undefined): number[] => {
   let week = [0, 1, 2, 3, 4, 5, 6]
-  if (court) {
-    let nonOperatingDaysNumber = court.non_operating_days.map(
-      (elem) => weekDayNumber[elem.regular_day_off as keyof WeekDayNumber]
+  if (court!.non_operating_days) {
+    let nonOperatingDaysNumber = court!.non_operating_days.regular_day_off.map(
+      (elem) => weekDayNumber[elem as keyof WeekDayNumber]
     )
     return week.filter((day) => nonOperatingDaysNumber.indexOf(day) === -1)
   }
   return week
 }
+
+export const getDirtyValues = (updatedValues: any, initialValues: any): any => {
+  let data = {}
+
+  for (const key in updatedValues) {
+    if (updatedValues[key] !== initialValues[key]) {
+      data = { ...data, [key]: updatedValues[key] }
+    }
+  }
+
+  if (Object.keys(data).length > 0) return data
+  else return null
+}
+
+

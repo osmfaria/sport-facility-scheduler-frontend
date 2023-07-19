@@ -13,9 +13,9 @@ import styles from '../../../styles/Location.module.css'
 
 const LocationCourtCard = () => {
   const { addressString, address } = useFacility()
-  const { number, street, city, state } = address!
+  const { address1, city, state } = address!
 
-  const imageSrc = `https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_EMBEDDED_MAPS_KEY}&q=${number}+${street},${city}+${state}`
+  const imageSrc = `https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_EMBEDDED_MAPS_KEY}&q=${address1},${city}+${state}`
 
   return (
     <Card sx={sxCard}>

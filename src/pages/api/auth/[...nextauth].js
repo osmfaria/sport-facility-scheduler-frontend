@@ -6,7 +6,7 @@ const loginUser = async (credentials) => {
   const user = await axios
     .post('https://court-scheduler.herokuapp.com/api/login/', credentials)
     .then((res) => res.data)
-    .catch((err) => console.log('auth error:', err))
+    .catch((_) => toast.error('ops... something went wrong, try again later'))
 
   return user
 }

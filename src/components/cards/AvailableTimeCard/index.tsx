@@ -55,8 +55,6 @@ const AvailableTimeCard = () => {
     setNumberOfHours(1)
   }, [timeSlotRange])
 
-  console.log('court schedule: ', courtSchedule)
-
   return (
     <Paper sx={sxPaper}>
       <BookingTimeCard />

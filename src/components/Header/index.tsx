@@ -13,6 +13,7 @@ import SettingsDrawer from '../SettingsDrawer'
 import { signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { sxAppBar, sxBox, sxIconButton, sxIcon, sxLink, sxLogo } from './styles'
+import { Menu } from '@mui/icons-material'
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -79,7 +80,7 @@ export default function Header() {
                   sx={sxIconButton}
                   onClick={handleDrawer}
                 >
-                  <SettingsIcon sx={sxIcon} />
+                  <Menu sx={sxIcon} />
                 </IconButton>
               </Tooltip>
             </Stack>

@@ -3,14 +3,32 @@ import {
   LoginUserProps,
   RegisterAxiosError,
   RegisterProps,
+  UpdateUserAxiosError,
+  UpdateUserProps,
+  UserProps,
 } from './registerInterface'
 import { StringMappingType } from 'typescript'
-import { FacilityRegisterProp, RegisterFacilityAxiosError } from './facilityInterface'
+import {
+  AddressAxiosError,
+  AddressProp,
+  FacilityPatchProp,
+  FacilityRegisterProp,
+  RegisterFacilityAxiosError,
+} from './facilityInterface'
+import { CreateCourtProp, UpdateCourtProp } from './courtInterface'
 
 export interface UserProviderContext {
   registerUser: (user: RegisterProps) => Promise<RegisterAxiosError | undefined>
   loginUser: (credentials: LoginUserProps) => Promise<string | undefined>
+  updateUser: (
+    updatedUser: UpdateUserProps,
+    id: string,
+    token: string
+  ) => Promise<UpdateUserAxiosError | undefined>
+  getUser: (id: string, token: string) => Promise<void>
+  userData: UserProps | undefined
   isLoading: boolean
+  isLoadingUpdate: boolean
 }
 
 export interface ColorModeContext {
@@ -20,7 +38,7 @@ export interface ColorModeContext {
 
 interface NonOperatingDays {
   id: StringMappingType
-  regular_day_off: string
+  regular_day_off: string[]
   court: string
 }
 
@@ -38,16 +56,17 @@ export interface Court {
   sport: string
   opening_hour: string
   closing_hour: string
-  non_operating_days: NonOperatingDays[]
+  non_operating_days: NonOperatingDays
 }
 
 export interface Address {
   id: string
-  street: string
-  number: string
+  address1: string
+  address2: string
   city: string
   zipcode: string
   state: string
+  country: string
   map_image: string
 }
 
@@ -87,14 +106,38 @@ export interface RawCourtEvent {
   }
 }
 
+export interface RawHoliday {
+  id: string
+  holiday: string
+  court: string
+}
+
 export interface CourtEvent {
   id: string
   start: string
-  end: string
+  end?: string
   title: string
-  extendedProps: {
+  backgroundColor?: string
+  display?: string
+  extendedProps?: {
     email: string
   }
+}
+
+export interface CourtPartial {
+  name: string
+  capacity: number
+  is_indoor: boolean
+  price_by_hour: string
+  max_schedule_range_in_days: number
+  sport: string
+  opening_hour: string
+  closing_hour: string
+  non_operating_days: NonOperatingDays[]
+}
+
+export interface HolidayProp {
+  holiday: string
 }
 
 export interface CourtProviderContext {
@@ -108,6 +151,18 @@ export interface CourtProviderContext {
   selectCourtId: (id: string) => void
   courtId: string
   selectCity: (name: string) => void
+  createCourt: (token: string, data: CreateCourtProp) => Promise<void>
+  isLoading: boolean
+  updateCourt: (
+    token: string,
+    data: UpdateCourtProp,
+    id: string
+  ) => Promise<void>
+  createCourtDaysOff: (
+    token: string,
+    data: string[],
+    id: string
+  ) => Promise<void>
 }
 
 export interface BookingResponse {
@@ -151,6 +206,11 @@ export interface ScheduleProviderContext {
   ) => Promise<void>
   courtEvents: CourtEvent[]
   resetCourtEvents: () => void
+  cancelBooking: (token: string, id: string) => Promise<void>
+  createHoliday: (token: string, id: string, data: HolidayProp) => Promise<void>
+  deleteHoliday: (token: string, id: string, date: string) => Promise<void>
+  getHoliday: (token: string, id: string) => Promise<void>
+  selectEvents: (events: CourtEvent[]) => void
 }
 
 export interface FacilityProviderContext {
@@ -159,7 +219,9 @@ export interface FacilityProviderContext {
   getFacilityCourts: (facilityId: string, token: string) => Promise<void>
   getFacilitiesByOwner: (token: string) => Promise<void>
   facilitiesByOwner: Facility[] | undefined
-  courtsByFacility: Court[]
+  chosenFacility: Facility | undefined
+  chosenCourt: Court | undefined
+  courtsByFacility: Court[] | undefined
   facility: Facility | undefined
   address: Address | undefined
   isLoadingAddress: boolean
@@ -172,6 +234,21 @@ export interface FacilityProviderContext {
     data: FacilityRegisterProp
   ) => Promise<RegisterFacilityAxiosError>
   isLoading: boolean
+  removeFacility: (token: string, facilityId: string) => Promise<void>
+  removeCourt: (token: string, courtId: string) => Promise<void>
+  updateFacility: (
+    token: string,
+    facilityId: string,
+    data: FacilityPatchProp
+  ) => Promise<Omit<RegisterFacilityAxiosError, 'address'>>
+  updateAddress: (
+    token: string,
+    facilityId: string,
+    data: AddressProp
+  ) => Promise<AddressAxiosError>
+  selectCourt: (court: Court | undefined) => void
+  selectFacility: (facility: Facility) => void
+  selectInitialData: () => void
 }
 
 export interface StepsProviderContext {

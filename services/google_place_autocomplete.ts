@@ -30,11 +30,6 @@ const useGooglePlaceAutoComplete = () => {
       lng = ''
 
     // Get each component of the address from the place details,
-    console.log(
-      'place no google: ',
-      place.geometry.location.lat(),
-      place.geometry.location.lng()
-    )
     if (place) {
       for (const component of place.address_components) {
         const componentType = component.types[0]

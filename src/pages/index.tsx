@@ -1,13 +1,5 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Divider,
-  Stack,
-  Typography,
-} from '@mui/material'
+import { Avatar, Box, Button, Divider, Stack, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
-import styles from '../styles/Home.module.css'
 import {
   avatarStyles,
   buttonStyles2,
@@ -30,6 +22,7 @@ import phone from '../../public/phone-booking.png'
 import CustomAnimation from '../components/CustomAnimation'
 import CardFan from '../components/cards/CardsFan'
 import SectionMarker from '../components/Misc/SectionMarker'
+import CustomDivider from '../components/Misc/CustomDivider'
 
 export default function Home() {
   const router = useRouter()
@@ -67,17 +60,17 @@ export default function Home() {
               spacing={2}
               justifyContent='center'
               margin='50px auto 0'
-              maxWidth={{xs:'300px', sm: 'none'}}
+              maxWidth={{ xs: '300px', sm: 'none' }}
             >
               <Button
                 variant='contained'
                 sx={buttonStyles2}
                 onClick={() => router.push('/courts')}
               >
-                Book NOW
+                Book Now
               </Button>
               <Button variant='outlined' sx={buttonStyles}>
-                Add your facility
+                Add Your Facility
               </Button>
             </Stack>
           </Fade>
@@ -85,20 +78,7 @@ export default function Home() {
       </Box>
 
       <Box position='relative' zIndex={2}>
-        <div className={styles.divider}>
-          <svg
-            data-name='Layer 1'
-            xmlns='http://www.w3.org/2000/svg'
-            viewBox='0 0 1200 120'
-            preserveAspectRatio='none'
-            className={styles.svg}
-          >
-            <path
-              d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z'
-              className={styles.shapefill}
-            ></path>
-          </svg>
-        </div>
+        <CustomDivider color='paper' />
 
         <SectionMarker firstColor={'#ee0979'} secondColor={'#ff6a00'}>
           1
@@ -176,20 +156,7 @@ export default function Home() {
       </Box>
 
       <Box position='relative' sx={sxBackgroundColor}>
-        <div className={styles.divider}>
-          <svg
-            data-name='Layer 1'
-            xmlns='http://www.w3.org/2000/svg'
-            viewBox='0 0 1200 120'
-            preserveAspectRatio='none'
-            className={styles.svg}
-          >
-            <path
-              d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z'
-              className={styles.shapefill2}
-            ></path>
-          </svg>
-        </div>
+        <CustomDivider color='default' />
 
         <Stack justifyContent='center' alignItems='center' m='80px 0 0'>
           <SectionMarker firstColor='#EC6EAD' secondColor='#3494E6'>
@@ -256,7 +223,7 @@ export default function Home() {
                     fontSize='18px'
                     color='GrayText'
                   >
-                    Customize your venue's operating hours and days.
+                    Customize your venue&apos;s operatings hours and days.
                   </Typography>
                 </Stack>
               </Box>
@@ -266,20 +233,8 @@ export default function Home() {
       </Box>
 
       <Box position='relative'>
-        <div className={styles.divider}>
-          <svg
-            data-name='Layer 1'
-            xmlns='http://www.w3.org/2000/svg'
-            viewBox='0 0 1200 120'
-            preserveAspectRatio='none'
-            className={styles.svg}
-          >
-            <path
-              d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z'
-              className={styles.shapefill}
-            ></path>
-          </svg>
-        </div>
+        <CustomDivider color='paper' />
+
         <SectionMarker firstColor='#67B26F' secondColor='#4ca2cd'>
           3
         </SectionMarker>

@@ -7,9 +7,10 @@ export const sxContainer: SxProps = {
 export const sxBox: SxProps = {
   boxShadow: 1,
   borderRadius: 1,
-  padding: '20px 40px 50px',
+  padding: {xs: '10px 10px 20px', md: '20px 40px 50px'},
   background: 'rgba(255, 255, 255, 0.1)',
   backdropFilter: 'blur(20px)',
+  minHeight: '520px',
 }
 
 export const sxAvatar: SxProps = {

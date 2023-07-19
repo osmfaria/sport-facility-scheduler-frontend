@@ -16,8 +16,9 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
-        <Script src={src} strategy='beforeInteractive' async defer/>
+        <Script src={src} strategy='beforeInteractive' async defer />
       </body>
     </Html>
   )
 }
+

@@ -5,6 +5,8 @@ import Providers from 'providers'
 import { SessionProvider } from 'next-auth/react'
 import type { Session } from 'next-auth'
 import Layout from '../components/Layout'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function App({
   Component,
@@ -14,6 +16,7 @@ export default function App({
     <SessionProvider session={session} refetchInterval={60 * 60 * 2}>
       <Providers>
         <CssBaseline />
+        <ToastContainer />
         <Layout>
           <Component {...pageProps} />
         </Layout>

@@ -3,12 +3,17 @@ import dayjs from 'dayjs'
 import {
   BookingResponse,
   CourtEvent,
+  HolidayProp,
   RawCourtEvent,
+  RawHoliday,
   ScheduleProviderContext,
 } from 'interfaces/providerInterface'
 import { childrenProp } from 'interfaces/utilityInterface'
 import { createContext, useContext, useState } from 'react'
+import { toast } from 'react-toastify'
 import API from 'services/api'
+import utc from 'dayjs/plugin/utc'
+dayjs.extend(utc)
 
 const ScheduleContext = createContext<ScheduleProviderContext>(
   {} as ScheduleProviderContext
@@ -77,12 +82,11 @@ export const ScheduleProvider = ({ children }: childrenProp) => {
         } else {
           setCourtSchedule([])
         }
-        setIsLoading(false)
       })
-      .catch((err) => {
-        setIsLoading(false)
-        console.log(err)
+      .catch((_) => {
+        toast.error('ops... something went wrong, try again later')
       })
+      .finally(() => setIsLoading(false))
   }
 
   const bookCourt = async (
@@ -131,7 +135,7 @@ export const ScheduleProvider = ({ children }: childrenProp) => {
     initialDate: string,
     finalDate: string
   ) => {
-    API.get(
+    await API.get(
       `sport_facilities/courts/${courtId}/management/${initialDate}/${finalDate}/`,
       {
         headers: {
@@ -139,11 +143,18 @@ export const ScheduleProvider = ({ children }: childrenProp) => {
         },
       }
     )
-      .then((res) => formatEvents(res.data))
-      .catch((err) => console.log(err))
+      .then((res) => {
+        const events = formatEvents(res.data)
+        setCourtEvents(events)
+      })
+      .catch((err) => {
+        toast.error('ops... something went wrong, try again later')
+      })
+
+    return
   }
 
-  const formatEvents = (events: RawCourtEvent[]) => {
+  const formatEvents = (events: RawCourtEvent[]): CourtEvent[] => {
     let durationTrack = 0
     const eventList = events.reduce<CourtEvent[]>((acc, cur) => {
       if (durationTrack === 0) {
@@ -157,6 +168,7 @@ export const ScheduleProvider = ({ children }: childrenProp) => {
           extendedProps: {
             email: cur.user.email,
           },
+          overlap: false,
         }
         acc.push(event)
         durationTrack = cur.number_of_hours - 1
@@ -166,11 +178,87 @@ export const ScheduleProvider = ({ children }: childrenProp) => {
       return acc
     }, [])
 
-    setCourtEvents(eventList)
+    return eventList
   }
 
   const resetCourtEvents = () => {
     setCourtEvents([])
+  }
+
+  const selectEvents = (events: CourtEvent[]) => {
+    setCourtEvents(events)
+  }
+
+  const cancelBooking = async (token: string, id: string) => {
+    setIsLoading(true)
+
+    await API.delete(`/sport_facilities/courts/schedules/${id}`, {
+      headers: { Authorization: `Token ${token}` },
+    })
+      .then((res) => res.data)
+      .catch((_) => toast.error('ops... something went wrong, try again later'))
+      .finally(() => setIsLoading(false))
+  }
+
+  const createHoliday = async (
+    token: string,
+    id: string,
+    data: HolidayProp
+  ): Promise<void> => {
+    setIsLoading(true)
+    await API.post(`/sport_facilities/courts/${id}/holidays/`, data, {
+      headers: { Authorization: `Token ${token}` },
+    })
+      .then((_) => toast.success('Holiday added'))
+      .catch((_) => toast.error('ops... something went wrong, try again later'))
+      .finally(() => setIsLoading(false))
+  }
+
+  const deleteHoliday = async (
+    token: string,
+    id: string,
+    date: string
+  ): Promise<void> => {
+    setIsLoading(true)
+    await API.delete(`sport_facilities/courts/${id}/holidays/${date}/`, {
+      headers: { Authorization: `Token ${token}` },
+    })
+      .then((_) => toast.success('Changes saved!'))
+      .catch((_) => toast.error('ops... something went wrong, try again later'))
+      .finally(() => setIsLoading(false))
+  }
+
+  const getHoliday = async (token: string, id: string): Promise<void> => {
+    setIsLoading(true)
+    await API.get(`/sport_facilities/courts/${id}/holidays/`, {
+      headers: { Authorization: `Token ${token}` },
+    })
+      .then((res) => {
+        const holidays = formatHoliday(res.data)
+        setCourtEvents((prev) => [...prev, ...holidays])
+      })
+      .catch((err) => {
+        toast.error('ops... something went wrong, try again later')
+      })
+      .finally(() => setIsLoading(false))
+  }
+
+  const formatHoliday = (holidays: RawHoliday[]): CourtEvent[] => {
+    const holidayList = holidays.reduce<CourtEvent[]>((acc, cur) => {
+      const start = dayjs(cur.holiday, 'YYYY-MM-DD').toISOString()
+      const event = {
+        id: cur.id,
+        title: 'Holiday',
+        start,
+        textColor: 'black',
+        backgroundColor: 'yellow',
+        allDay: true,
+      }
+      acc.push(event)
+      return acc
+    }, [])
+
+    return holidayList
   }
 
   return (
@@ -190,6 +278,11 @@ export const ScheduleProvider = ({ children }: childrenProp) => {
         getCourtEvents,
         courtEvents,
         resetCourtEvents,
+        cancelBooking,
+        createHoliday,
+        deleteHoliday,
+        getHoliday,
+        selectEvents,
       }}
     >
       {children}

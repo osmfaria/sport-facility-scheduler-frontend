@@ -72,7 +72,7 @@ const Dashboard = (): ReactElement => {
         </Grid>
 
         <Grid item xs={12} sm={6} md={4}>
-          <Card sx={sxCard}>
+          <Card sx={sxCard} onClick={() => router.push('/dashboard/facilitymanager')}>
             <CardHeader
               title='Manage Facility'
               avatar={

@@ -27,20 +27,20 @@ export const customLightTheme: CustomLightThemeConfig = {
   palette: {
     mode: 'light',
     primary: {
-      main: '#000000', 
-      light: '#333333', 
+      main: '#000000',
+      light: '#333333',
     },
     secondary: {
-      main: '#0070F3', 
-      light: '#146DD6', 
+      main: '#0070F3',
+      light: '#146DD6',
     },
     background: {
-      default: '#ffffff', 
-      paper: '#f5f5f5', 
+      default: '#ffffff',
+      paper: '#f5f5f5',
     },
     text: {
-      primary: '#333333', 
-      secondary: '#888888', 
+      primary: '#333333',
+      secondary: '#888888',
     },
     grey: {
       100: '#F3F4F6',
