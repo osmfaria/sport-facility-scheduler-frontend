@@ -59,9 +59,6 @@ const CourtManagerComponent = () => {
 
   return (
     <Container maxWidth='lg' sx={sxContainer}>
-      <Typography variant='h1' fontSize='1.5rem' fontWeight='500' ml='10px'>
-        Sport Venues Manager
-      </Typography>
       <Box m='44px 0'>
         {firstFacility && (
           <FormControl sx={sxFormControl}>

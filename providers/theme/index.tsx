@@ -9,7 +9,7 @@ import {
 } from 'react'
 import { childrenProp } from 'interfaces/utilityInterface'
 import { ColorModeContext } from 'interfaces/providerInterface'
-import { customDarkTheme, customLightTheme } from './customDarkTheme'
+import { customDarkTheme, customLightTheme } from './customTheme'
 
 const ColorModeContext = createContext<ColorModeContext>({} as ColorModeContext)
 
@@ -18,7 +18,7 @@ export const ColorModeProvider = ({ children }: childrenProp) => {
 
   const colorMode = useMemo<ColorModeContext>(
     () => ({
-      toggleColorMode: (event: SyntheticEvent, value: string) => {
+      toggleColorMode: (event: SyntheticEvent | null, value: string) => {
         localStorage.setItem('theme-courtscheduler', JSON.stringify(value))
         if (value) {
           const toggledValue = value === 'dark' ? 'dark' : 'light'
@@ -39,12 +39,6 @@ export const ColorModeProvider = ({ children }: childrenProp) => {
   const theme = useMemo(
     () =>
       createTheme({
-        typography: {
-          button: {
-            textTransform: 'none',
-            fontWeight: '600',
-          },
-        },
         components: {
           MuiOutlinedInput: {
             styleOverrides: {
@@ -74,6 +68,29 @@ export const ColorModeProvider = ({ children }: childrenProp) => {
                   secondary: 'rgba(255, 255, 255, 0.16)',
                 },
               }),
+        },
+        typography: {
+          fontFamily: [
+            'Roboto',
+            '-apple-system',
+            'BlinkMacSystemFont',
+            '"Segoe UI"',
+            '"Helvetica Neue"',
+            'Arial',
+            'sans-serif',
+            '"Apple Color Emoji"',
+            '"Segoe UI Emoji"',
+            '"Segoe UI Symbol"',
+          ].join(','),
+          h1: {
+            fontWeight: 700,
+          },
+          h2: {
+            fontWeight: 700,
+          },
+          h3: {
+            fontWeight: 700,
+          },
         },
       }),
     [mode]

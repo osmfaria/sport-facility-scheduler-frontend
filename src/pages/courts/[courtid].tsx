@@ -15,6 +15,7 @@ import {
 } from '@mui/icons-material'
 import { buttonStyles, containerStyles } from '@/styles/courts.[courtid]'
 import { useSchedule } from 'providers/schedule'
+import Head from 'next/head'
 dayjs.extend(advancedFormat)
 
 const Court = () => {
@@ -38,40 +39,46 @@ const Court = () => {
   }, [court])
 
   return (
-    <Container maxWidth='lg' sx={containerStyles}>
-      <CustomStepper />
-      <Button
-        variant='contained'
-        endIcon={<ArrowCircleRightOutlined />}
-        sx={buttonStyles}
-        onClick={() => handleNext(`/courts/${courtid}/booking`)}
-      >
-        Continue
-      </Button>
-      <Button
-        variant='outlined'
-        startIcon={<ArrowCircleLeftOutlined />}
-        onClick={() => handleBack(`/courts`)}
-      >
-        Go back
-      </Button>
-      <Grid container spacing={2}>
-        <Grid item md={6} xs={12}>
-          {!!court && !isLoadingCourt ? (
-            <ScheduleCourtCard />
-          ) : (
-            <Skeleton animation='wave' variant='rounded' height={'351px'} />
-          )}
+    <>
+      <Head>
+        <title>Ninja Sports | Venue Details</title>
+        <meta name='Login page' content='login form' />
+      </Head>
+      <Container maxWidth='lg' sx={containerStyles}>
+        <CustomStepper />
+        <Button
+          variant='contained'
+          endIcon={<ArrowCircleRightOutlined />}
+          sx={buttonStyles}
+          onClick={() => handleNext(`/courts/${courtid}/booking`)}
+        >
+          Continue
+        </Button>
+        <Button
+          variant='outlined'
+          startIcon={<ArrowCircleLeftOutlined />}
+          onClick={() => handleBack(`/courts`)}
+        >
+          Go back
+        </Button>
+        <Grid container spacing={2}>
+          <Grid item md={6} xs={12}>
+            {!!court && !isLoadingCourt ? (
+              <ScheduleCourtCard />
+            ) : (
+              <Skeleton animation='wave' variant='rounded' height={'351px'} />
+            )}
+          </Grid>
+          <Grid item md={6} xs={12}>
+            {!!address ? (
+              <LocationCourtCard />
+            ) : (
+              <Skeleton animation='wave' variant='rounded' height={'351px'} />
+            )}
+          </Grid>
         </Grid>
-        <Grid item md={6} xs={12}>
-          {!!address ? (
-            <LocationCourtCard />
-          ) : (
-            <Skeleton animation='wave' variant='rounded' height={'351px'} />
-          )}
-        </Grid>
-      </Grid>
-    </Container>
+      </Container>
+    </>
   )
 }
 

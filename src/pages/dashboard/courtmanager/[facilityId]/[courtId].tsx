@@ -11,6 +11,7 @@ import { Stadium } from '@mui/icons-material'
 import { useCourt } from 'providers/courts'
 import { useRouter } from 'next/router'
 import CourtForm from '../../../../components/forms/CourtForm'
+import Head from 'next/head'
 
 function EditCourt(): ReactElement {
   const router = useRouter()
@@ -22,28 +23,29 @@ function EditCourt(): ReactElement {
   }, [courtId])
 
   return (
-    <Container maxWidth='sm' sx={sxContainer}>
-      <Box sx={sxBox}>
-        <Avatar sx={sxAvatar}>
-          <Stadium fontSize='large' />
-        </Avatar>
-        <Typography
-          variant='h3'
-          mb={4}
-          color='primary'
-          fontSize={{ xs: '36px', md: '48px' }}
-        >
-          Edit Sport Venue
-        </Typography>
-        {!isLoadingCourt && court ? (
-          <CourtForm court={court} />
-        ) : (
-          <Box>
-            <LinearProgress />
-          </Box>
-        )}
-      </Box>
-    </Container>
+    <>
+      <Head>
+        <title>Ninja Sports | Edit Facility</title>
+        <meta name='Facility edit' content='Facility edit form' />
+      </Head>
+      <Container maxWidth='sm' sx={sxContainer}>
+        <Box sx={sxBox}>
+          <Avatar sx={sxAvatar}>
+            <Stadium fontSize='large' />
+          </Avatar>
+          <Typography variant='h2' mb={4} fontSize={'24px'}>
+            Edit Sport Venue
+          </Typography>
+          {!isLoadingCourt && court ? (
+            <CourtForm court={court} />
+          ) : (
+            <Box>
+              <LinearProgress />
+            </Box>
+          )}
+        </Box>
+      </Container>
+    </>
   )
 }
 

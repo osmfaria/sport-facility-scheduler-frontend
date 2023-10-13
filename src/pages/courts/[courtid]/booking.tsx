@@ -12,6 +12,7 @@ import CustomStepper from '../../../components/Misc/CustomStepper'
 import { useSteps } from 'providers/StepsProvider'
 import { ArrowCircleLeftOutlined } from '@mui/icons-material'
 import { buttonStyles, containerStyles } from '../../../styles/booking.styles'
+import Head from 'next/head'
 dayjs.extend(advancedFormat)
 
 const Booking = () => {
@@ -34,25 +35,31 @@ const Booking = () => {
   }, [])
 
   return (
-    <Container maxWidth='lg' sx={containerStyles}>
-      <CustomStepper />
-      <Button
-        variant='outlined'
-        startIcon={<ArrowCircleLeftOutlined />}
-        sx={buttonStyles}
-        onClick={() => handleBack(`/courts/${courtid}`)}
-      >
-        Go back
-      </Button>
-      <Grid container spacing={2}>
-        <Grid item md={5} xs={12}>
-          <CalendarCard />
+    <>
+      <Head>
+        <title>Ninja Sports | Booking Calendar</title>
+        <meta name='Login page' content='login form' />
+      </Head>
+      <Container maxWidth='lg' sx={containerStyles}>
+        <CustomStepper />
+        <Button
+          variant='outlined'
+          startIcon={<ArrowCircleLeftOutlined />}
+          sx={buttonStyles}
+          onClick={() => handleBack(`/courts/${courtid}`)}
+        >
+          Go back
+        </Button>
+        <Grid container spacing={2}>
+          <Grid item md={5} xs={12}>
+            <CalendarCard />
+          </Grid>
+          <Grid item md={7} xs={12}>
+            <AvailableTimeCard />
+          </Grid>
         </Grid>
-        <Grid item md={7} xs={12}>
-          <AvailableTimeCard />
-        </Grid>
-      </Grid>
-    </Container>
+      </Container>
+    </>
   )
 }
 

@@ -1,25 +1,25 @@
 import { SxProps, Theme } from '@mui/material'
 
-export const sxBox = { zIndex: 10, paddingBottom: '64px' }
-
 export const sxAppBar: SxProps = {
-  background: 'rgba(255, 255, 255, 0.03)',
+  marginTop: '10px',
+  background: 'transparent',
   boxShadow: 'none',
-  WebkitBackdropFilter: 'blur(5px)',
-  backdropFilter: 'blur(5px)',
-  color: 'inherit',
+}
+
+export const sxToolbar: SxProps = {
+  background: 'rgba(255, 255, 255, 0.8)',
+  borderRadius: '16px',
+  boxShadow: 2,
+  backdropFilter: 'blur(4px)',
+  WebkitBackdropFilter: 'blur(4px)',
+  height: '64px',
 }
 
 export const sxLogo: SxProps = {
-  fontFamily: "'Poppins', sans-serif",
-  fontSize: { xs: '1.3rem', sm: '1.5rem' },
-  fontWeight: 'bold',
-  background: 'linear-gradient(90deg, #C33764, #1D2671)',
-  WebkitBackgroundClip: 'text',
-  WebkitTextFillColor: 'transparent',
-  padding: '5px 10px',
-  borderRadius: '5px',
   flexGrow: 1,
+  height: '100%',
+  display: 'flex',
+  maxHeight: '50px',
 }
 
 export const sxLink = {
@@ -27,9 +27,24 @@ export const sxLink = {
   color: 'inherit',
 }
 
-export const sxIconButton = (theme: Theme) => ({
+const IconButtonStyles = (theme: Theme) => ({
   borderRadius: '10px',
-  border: `1px solid  ${theme.palette.divider}`,
+  // border: `1px solid #c3c3c3`,
+})
+
+export const sxIconButton = (theme: Theme) => ({
+  ...IconButtonStyles(theme),
+  [theme.breakpoints.down('sm')]: {
+    display: 'none',
+  },
+})
+
+export const sxIconButtonMobile = (theme: Theme) => ({
+  ...IconButtonStyles(theme),
+  display: 'inherit',
+  [theme.breakpoints.up('sm')]: {
+    display: 'none',
+  },
 })
 
 export const sxIcon: SxProps = { height: '20px', width: '20px' }

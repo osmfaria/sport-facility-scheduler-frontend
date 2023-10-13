@@ -1,11 +1,12 @@
 import CourtManagerSkeleton from '../../../components/skeletons/CourtManagerSkeleton'
 import { sxContainer } from '@/styles/courtmanager.styles'
-import { Container } from '@mui/material'
+import { Container, Typography } from '@mui/material'
 import { useSession } from 'next-auth/react'
 import { useFacility } from 'providers/FacilityProvider'
 import { useEffect } from 'react'
 import NoFacilityCard from '../../../components/cards/NoFacilityCard'
 import CourtManagerComponent from '../../../components/CourtManagerComponent'
+import Head from 'next/head'
 
 const CourtManager = () => {
   const { getFacilitiesByOwner, facilitiesByOwner, isLoadingFacilityByOwner } =
@@ -23,15 +24,24 @@ const CourtManager = () => {
   const isLoading = facilitiesByOwner === undefined && isLoadingFacilityByOwner
 
   return (
-    <Container maxWidth='lg' sx={sxContainer}>
-      {isLoading ? (
-        <CourtManagerSkeleton />
-      ) : isFacilityAvailable ? (
-        <CourtManagerComponent />
-      ) : (
-        <NoFacilityCard />
-      )}
-    </Container>
+    <>
+      <Head>
+        <title>Ninja Sports | Venue Manager</title>
+        <meta name='New Venue' content='New venue form' />
+      </Head>
+      <Container maxWidth='lg' sx={sxContainer}>
+        <Typography variant='h1' fontSize='1.5rem' fontWeight='500' ml='10px'>
+          Sport Venues Manager
+        </Typography>
+        {isLoading ? (
+          <CourtManagerSkeleton />
+        ) : isFacilityAvailable ? (
+          <CourtManagerComponent />
+        ) : (
+          <NoFacilityCard />
+        )}
+      </Container>
+    </>
   )
 }
 

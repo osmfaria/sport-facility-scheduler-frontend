@@ -15,7 +15,8 @@ const CourtsGrid = ({
   const { courts, isLoadingCourts } = useCourt()
   const { courtsByFacility, isLoadingCourtsByFacility } = useFacility()
 
-  const isLoading = source === 'schedule' ? isLoadingCourts : isLoadingCourtsByFacility
+  const isLoading =
+    source === 'schedule' ? isLoadingCourts : isLoadingCourtsByFacility
 
   const courtsArray = source === 'schedule' ? courts : courtsByFacility
 
@@ -33,8 +34,8 @@ const CourtsGrid = ({
             <CourtCardSkeleton />
           </Grid>
         ))
-      ) : courtsArray.length > 0 ? (
-        courtsArray.map((court: Court) => (
+      ) : courtsArray!.length > 0 ? (
+        courtsArray!.map((court: Court) => (
           <Grid item zeroMinWidth key={court.id} sx={sxGrid}>
             <CourtCard court={court} />
           </Grid>

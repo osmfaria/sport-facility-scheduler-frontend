@@ -24,6 +24,7 @@ import { useFacility } from 'providers/FacilityProvider'
 import { useSession } from 'next-auth/react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import Head from 'next/head'
 
 function NewFacility(): ReactElement {
   const [latlng, setLatlng] = useState<string>('')
@@ -159,152 +160,160 @@ function NewFacility(): ReactElement {
   }
 
   return (
-    <Container maxWidth='sm' sx={sxContainer}>
-      <Box sx={sxBox}>
-        <Avatar sx={sxAvatar}>
-          <Stadium fontSize='large' />
-        </Avatar>
-        <Typography variant='h3' mb={4} color='primary'>
-          Create Facility
-        </Typography>
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={(data, formik) => onSubmit(data, formik)}
-        >
-          {({ errors, touched, setFieldValue, handleChange, values }) => {
-            // eslint-disable-next-line
-            useEffect(() => {
-              const loadGoogleMaps = async (): Promise<void> => {
-                // eslint-disable-next-line
-                autoComplete = await googleAutoComplete.initAutoComplete(
-                  address1Ref.current!,
-                  () => handleAddressSelect(setFieldValue)
-                )
-              }
-              loadGoogleMaps()
-            }, [])
-            return (
-              <Form>
-                <Stack spacing={2}>
-                  <Stack direction='row' spacing={2}>
+    <>
+      <Head>
+        <title>Ninja Sports | New Facility</title>
+        <meta name='New Facility' content='New facility form' />
+      </Head>
+      <Container maxWidth='sm' sx={sxContainer}>
+        <Box sx={sxBox}>
+          <Avatar sx={sxAvatar}>
+            <Stadium fontSize='large' />
+          </Avatar>
+          <Typography variant='h2' mb={4} fontSize={'24px'}>
+            Register Facility
+          </Typography>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={(data, formik) => onSubmit(data, formik)}
+          >
+            {({ errors, touched, setFieldValue, handleChange, values }) => {
+              // eslint-disable-next-line
+              useEffect(() => {
+                const loadGoogleMaps = async (): Promise<void> => {
+                  // eslint-disable-next-line
+                  autoComplete = await googleAutoComplete.initAutoComplete(
+                    address1Ref.current!,
+                    () => handleAddressSelect(setFieldValue)
+                  )
+                }
+                loadGoogleMaps()
+              }, [])
+              return (
+                <Form>
+                  <Stack spacing={2}>
+                    <Stack direction='row' spacing={2}>
+                      <Field
+                        as={TextField}
+                        name='name'
+                        type='text'
+                        label='Facility Name'
+                        error={!!errors.name && !!touched.name}
+                        helperText={!!touched.name && errors.name}
+                      />
+                      <Field
+                        as={TextField}
+                        name='phone_number'
+                        type='text'
+                        label='Phone Number'
+                        error={!!errors.phone_number && !!touched.phone_number}
+                        helperText={
+                          !!touched.phone_number && errors.phone_number
+                        }
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position='start'>
+                              <Phone />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                    </Stack>
                     <Field
                       as={TextField}
-                      name='name'
+                      name='email'
                       type='text'
-                      label='Facility Name'
-                      error={!!errors.name && !!touched.name}
-                      helperText={!!touched.name && errors.name}
-                    />
-                    <Field
-                      as={TextField}
-                      name='phone_number'
-                      type='text'
-                      label='Phone Number'
-                      error={!!errors.phone_number && !!touched.phone_number}
-                      helperText={!!touched.phone_number && errors.phone_number}
+                      label='Email'
+                      error={!!errors.email && !!touched.email}
+                      helperText={!!touched.email && errors.email}
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position='start'>
-                            <Phone />
+                            <Email />
                           </InputAdornment>
                         ),
                       }}
                     />
+                    <Field
+                      as={TextField}
+                      name='address1'
+                      type='text'
+                      label='Address Line 1*'
+                      error={!!errors.address1 && !!touched.address1}
+                      helperText={!!touched.address1 && errors.address1}
+                      inputRef={address1Ref}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position='start'>
+                            <LocationCity />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                    <Field
+                      as={TextField}
+                      name='address2'
+                      type='text'
+                      label='Address Line 2'
+                      error={!!errors.address2 && !!touched.address2}
+                      helperText={!!touched.address2 && errors.address2}
+                    />
+                    <Stack spacing={2} direction='row'>
+                      <Field
+                        as={TextField}
+                        name='city'
+                        type='text'
+                        label='City*'
+                        error={!!errors.city && !!touched.city}
+                        helperText={!!touched.city && errors.city}
+                      />
+                      <Field
+                        as={TextField}
+                        name='state'
+                        type='text'
+                        label='State*'
+                        error={!!errors.state && !!touched.state}
+                        helperText={!!touched.state && errors.state}
+                      />
+                    </Stack>
+                    <Stack spacing={2} direction='row'>
+                      <Field
+                        as={TextField}
+                        name='country'
+                        type='text'
+                        label='Country*'
+                        error={!!errors.country && !!touched.country}
+                        helperText={!!touched.country && errors.country}
+                      />
+                      <Field
+                        as={TextField}
+                        name='zipcode'
+                        type='text'
+                        label='Zipcode*'
+                        error={!!errors.zipcode && !!touched.zipcode}
+                        helperText={!!touched.zipcode && errors.zipcode}
+                      />
+                    </Stack>
                   </Stack>
-                  <Field
-                    as={TextField}
-                    name='email'
-                    type='text'
-                    label='Email'
-                    error={!!errors.email && !!touched.email}
-                    helperText={!!touched.email && errors.email}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position='start'>
-                          <Email />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                  <Field
-                    as={TextField}
-                    name='address1'
-                    type='text'
-                    label='Address Line 1*'
-                    error={!!errors.address1 && !!touched.address1}
-                    helperText={!!touched.address1 && errors.address1}
-                    inputRef={address1Ref}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position='start'>
-                          <LocationCity />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                  <Field
-                    as={TextField}
-                    name='address2'
-                    type='text'
-                    label='Address Line 2'
-                    error={!!errors.address2 && !!touched.address2}
-                    helperText={!!touched.address2 && errors.address2}
-                  />
-                  <Stack spacing={2} direction='row'>
-                    <Field
-                      as={TextField}
-                      name='city'
-                      type='text'
-                      label='City*'
-                      error={!!errors.city && !!touched.city}
-                      helperText={!!touched.city && errors.city}
-                    />
-                    <Field
-                      as={TextField}
-                      name='state'
-                      type='text'
-                      label='State*'
-                      error={!!errors.state && !!touched.state}
-                      helperText={!!touched.state && errors.state}
-                    />
-                  </Stack>
-                  <Stack spacing={2} direction='row'>
-                    <Field
-                      as={TextField}
-                      name='country'
-                      type='text'
-                      label='Country*'
-                      error={!!errors.country && !!touched.country}
-                      helperText={!!touched.country && errors.country}
-                    />
-                    <Field
-                      as={TextField}
-                      name='zipcode'
-                      type='text'
-                      label='Zipcode*'
-                      error={!!errors.zipcode && !!touched.zipcode}
-                      helperText={!!touched.zipcode && errors.zipcode}
-                    />
-                  </Stack>
-                </Stack>
-                <LoadingButton
-                  variant='contained'
-                  loading={isLoading}
-                  loadingPosition='center'
-                  color='primary'
-                  type='submit'
-                  size='large'
-                  sx={sxLoadingButton}
-                >
-                  Create Facility
-                </LoadingButton>
-              </Form>
-            )
-          }}
-        </Formik>
-      </Box>
-    </Container>
+                  <LoadingButton
+                    variant='contained'
+                    loading={isLoading}
+                    loadingPosition='center'
+                    color='primary'
+                    type='submit'
+                    size='large'
+                    sx={sxLoadingButton}
+                  >
+                    Create Facility
+                  </LoadingButton>
+                </Form>
+              )
+            }}
+          </Formik>
+        </Box>
+      </Container>
+    </>
   )
 }
 

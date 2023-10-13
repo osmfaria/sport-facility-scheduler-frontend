@@ -27,6 +27,7 @@ import {
   sxLoadingButton,
   sxSpan,
 } from '@/styles/register.styles'
+import Head from 'next/head'
 
 function Register(): ReactElement {
   const [isOwner, setIsOwner] = useState<boolean>(false)
@@ -106,108 +107,116 @@ function Register(): ReactElement {
     }
 
   return (
-    <Container maxWidth='sm' sx={sxContainer}>
-      <Box sx={sxBox}>
-        <Avatar sx={sxAvatar}>
-          <HowToRegIcon fontSize='large' />
-        </Avatar>
-        <Typography variant='h3' mb={4} color='primary'>
-          Register
-        </Typography>
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={(user, formik) => onSubmit(user, formik)}
-        >
-          {({ errors, touched, setFieldValue }) => (
-            <Form>
-              <Stack spacing={2}>
-                <Field
-                  as={TextField}
-                  name='email'
-                  type='email'
-                  label='Email address*'
-                  error={!!errors.email && !!touched.email}
-                  helperText={!!touched.email && errors.email}
-                />
-                <Field
-                  as={TextField}
-                  name='username'
-                  type='text'
-                  label='Username*'
-                  error={!!errors.username && !!touched.username}
-                  helperText={!!touched.username && errors.username}
-                />
-                <ToggleButtonGroup
-                  exclusive
-                  onChange={handleAccountType(setFieldValue)}
-                  value={isOwner}
-                  color='info'
-                >
-                  <ToggleButton value={false} sx={sxButton}>
-                    <AccountBoxIcon sx={sxIcon} /> User
-                  </ToggleButton>
-                  <ToggleButton value={true} sx={sxButton}>
-                    <StadiumIcon sx={sxIcon} /> Facility Owner
-                  </ToggleButton>
-                </ToggleButtonGroup>
-                <Field
-                  as={TextField}
-                  name='first_name'
-                  type='text'
-                  label='First name*'
-                  error={!!errors.first_name && !!touched.first_name}
-                  helperText={!!touched.first_name && errors.first_name}
-                />
-                <Field
-                  as={TextField}
-                  name='last_name'
-                  type='text'
-                  label='Last name*'
-                  error={!!errors.last_name && !!touched.last_name}
-                  helperText={!!touched.last_name && errors.last_name}
-                />
-                <Field
-                  as={TextField}
-                  name='password'
-                  type='password'
-                  label='Password*'
-                  error={!!errors.password && !!touched.password}
-                  helperText={!!touched.password && errors.password}
-                />
-                <Field
-                  as={TextField}
-                  name='confirmPassword'
-                  type='password'
-                  label='Confirm password*'
-                  error={!!errors.confirmPassword && !!touched.confirmPassword}
-                  helperText={
-                    !!touched.confirmPassword && errors.confirmPassword
-                  }
-                />
-              </Stack>
-              <LoadingButton
-                variant='contained'
-                loading={isLoading}
-                loadingPosition='center'
-                color='primary'
-                type='submit'
-                size='large'
-                sx={sxLoadingButton}
-              >
-                Register
-              </LoadingButton>
-            </Form>
-          )}
-        </Formik>
-        <Typography mt={5}>
-          Alrady have an account?
-          <Typography component='span' sx={sxSpan}>
-            <Link href='/login'>Sing In</Link>
+    <>
+      <Head>
+        <title>Ninja Sports | Register</title>
+        <meta name='Register page' content='register form' />
+      </Head>
+      <Container maxWidth='sm' sx={sxContainer}>
+        <Box sx={sxBox}>
+          <Avatar sx={sxAvatar}>
+            <HowToRegIcon fontSize='large' />
+          </Avatar>
+          <Typography variant='h2' mb={4} fontSize={'24px'}>
+            Register
           </Typography>
-        </Typography>
-      </Box>
-    </Container>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={(user, formik) => onSubmit(user, formik)}
+          >
+            {({ errors, touched, setFieldValue }) => (
+              <Form>
+                <Stack spacing={2}>
+                  <Field
+                    as={TextField}
+                    name='email'
+                    type='email'
+                    label='Email address*'
+                    error={!!errors.email && !!touched.email}
+                    helperText={!!touched.email && errors.email}
+                  />
+                  <Field
+                    as={TextField}
+                    name='username'
+                    type='text'
+                    label='Username*'
+                    error={!!errors.username && !!touched.username}
+                    helperText={!!touched.username && errors.username}
+                  />
+                  <ToggleButtonGroup
+                    exclusive
+                    onChange={handleAccountType(setFieldValue)}
+                    value={isOwner}
+                    color='primary'
+                  >
+                    <ToggleButton value={false} sx={sxButton}>
+                      <AccountBoxIcon sx={sxIcon} /> User
+                    </ToggleButton>
+                    <ToggleButton value={true} sx={sxButton}>
+                      <StadiumIcon sx={sxIcon} /> Facility Owner
+                    </ToggleButton>
+                  </ToggleButtonGroup>
+                  <Field
+                    as={TextField}
+                    name='first_name'
+                    type='text'
+                    label='First name*'
+                    error={!!errors.first_name && !!touched.first_name}
+                    helperText={!!touched.first_name && errors.first_name}
+                  />
+                  <Field
+                    as={TextField}
+                    name='last_name'
+                    type='text'
+                    label='Last name*'
+                    error={!!errors.last_name && !!touched.last_name}
+                    helperText={!!touched.last_name && errors.last_name}
+                  />
+                  <Field
+                    as={TextField}
+                    name='password'
+                    type='password'
+                    label='Password*'
+                    error={!!errors.password && !!touched.password}
+                    helperText={!!touched.password && errors.password}
+                  />
+                  <Field
+                    as={TextField}
+                    name='confirmPassword'
+                    type='password'
+                    label='Confirm password*'
+                    error={
+                      !!errors.confirmPassword && !!touched.confirmPassword
+                    }
+                    helperText={
+                      !!touched.confirmPassword && errors.confirmPassword
+                    }
+                  />
+                </Stack>
+                <LoadingButton
+                  variant='contained'
+                  loading={isLoading}
+                  loadingPosition='center'
+                  color='primary'
+                  type='submit'
+                  size='large'
+                  sx={sxLoadingButton}
+                >
+                  Register
+                </LoadingButton>
+              </Form>
+            )}
+          </Formik>
+          <Typography mt={5}>
+            Already have an account?
+            <Typography component='span' sx={sxSpan}>
+              <Link href='/login'>Sing In</Link>
+            </Typography>
+          </Typography>
+        </Box>
+      </Container>
+    </>
   )
 }
 

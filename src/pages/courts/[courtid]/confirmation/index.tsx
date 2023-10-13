@@ -3,27 +3,34 @@ import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrow
 import { Stack } from '@mui/system'
 import ConfirmationCard from '../../../../components/cards/ConfirmationCard'
 import { GetServerSidePropsContext } from 'next'
+import Head from 'next/head'
 
 const Confirmation = () => {
   return (
-    <Box paddingTop='60px' textAlign='center'>
-      <Typography variant='h5' marginBottom='20px'>
-        Thank you! Your booking is confirmed.
-      </Typography>
-      <Typography color='GrayText'>
-        We're excited to welcome you to our facility.
-      </Typography>
-      <Typography color='GrayText'>
-        Please check your email for details about your reservation.
-      </Typography>
-      <Stack alignItems={'center'}>
-        <Typography variant='overline' marginTop='70px'>
-          Appointment Details:
+    <>
+      <Head>
+        <title>Ninja Sports | Confirmation</title>
+        <meta name='Login page' content='login form' />
+      </Head>
+      <Box paddingTop='60px' textAlign='center'>
+        <Typography variant='h5' marginBottom='20px'>
+          Thank you! Your booking is confirmed.
         </Typography>
-        <KeyboardDoubleArrowDownIcon />
-      </Stack>
-      <ConfirmationCard />
-    </Box>
+        <Typography color='GrayText'>
+          We&apos;re excited to welcome you to our facility.
+        </Typography>
+        <Typography color='GrayText'>
+          Please check your email for details about your reservation.
+        </Typography>
+        <Stack alignItems={'center'}>
+          <Typography variant='overline' marginTop='70px'>
+            Appointment Details:
+          </Typography>
+          <KeyboardDoubleArrowDownIcon />
+        </Stack>
+        <ConfirmationCard />
+      </Box>
+    </>
   )
 }
 

@@ -147,10 +147,12 @@ export interface CourtProviderContext {
   courts: Court[]
   city: string
   court: Court | undefined
+  sport: string
   getCourt: (id: string) => Promise<void>
   selectCourtId: (id: string) => void
   courtId: string
   selectCity: (name: string) => void
+  selectSport: (sport: string) => void
   createCourt: (token: string, data: CreateCourtProp) => Promise<void>
   isLoading: boolean
   updateCourt: (
@@ -279,6 +281,7 @@ export interface CustomDarkThemeConfig {
       primary: string
       secondary: string
     }
+    divider: string
   }
 }
 
@@ -288,6 +291,8 @@ export interface CustomLightThemeConfig {
     primary: {
       main: string
       light: string
+      dark: string
+      contrastText: string
     }
     secondary: {
       main: string
@@ -301,94 +306,6 @@ export interface CustomLightThemeConfig {
       primary: string
       secondary: string
     }
-    grey: {
-      100: string
-      200: string
-      300: string
-      400: string
-      500: string
-      600: string
-      700: string
-      800: string
-      900: string
-    }
-  }
-  typography: {
-    fontFamily: string
-    h1: {
-      fontSize: string
-      fontWeight: number
-      lineHeight: number
-    }
-    h2: {
-      fontSize: string
-      fontWeight: number
-      lineHeight: number
-    }
-    h3: {
-      fontSize: string
-      fontWeight: number
-      lineHeight: number
-    }
-    h4: {
-      fontSize: string
-      fontWeight: number
-      lineHeight: number
-    }
-    h5: {
-      fontSize: string
-      fontWeight: number
-      lineHeight: number
-    }
-    h6: {
-      fontSize: string
-      fontWeight: number
-      lineHeight: number
-    }
-    subtitle1: {
-      fontSize: string
-      fontWeight: number
-      lineHeight: number
-    }
-    subtitle2: {
-      fontSize: string
-      fontWeight: number
-      lineHeight: number
-    }
-    body1: {
-      fontSize: string
-      fontWeight: number
-      lineHeight: number
-    }
-    body2: {
-      fontSize: string
-      fontWeight: number
-      lineHeight: number
-    }
-    button: {
-      fontSize: string
-      fontWeight: number
-      textTransform: string
-    }
-    caption: {
-      fontSize: string
-      fontWeight: number
-      lineHeight: number
-    }
-    overline: {
-      fontSize: string
-      fontWeight: number
-      lineHeight: number
-      textTransform: string
-    }
-  }
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          textTransform: string
-        }
-      }
-    }
+    divider: string
   }
 }

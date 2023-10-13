@@ -100,7 +100,7 @@ const CancelEventCard = ({
           loading={isLoading}
           loadingPosition='start'
           onClick={handleCancelation}
-          variant='text'
+          variant='contained'
           color='error'
           startIcon={<DeleteOutline />}
         >

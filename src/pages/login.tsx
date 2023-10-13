@@ -21,6 +21,7 @@ import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { LoadingButton } from '@mui/lab'
 import { sxAvatar, sxBox, sxContainer } from '@/styles/login.styles'
+import Head from 'next/head'
 
 function Login(): ReactElement {
   const [isLoading, setIsLoading] = useState<boolean>()
@@ -71,78 +72,84 @@ function Login(): ReactElement {
   }
 
   return (
-    <Container maxWidth='sm' sx={sxContainer}>
-      <Box sx={sxBox}>
-        <Avatar sx={sxAvatar}>
-          <ExitToAppIcon fontSize='large' />
-        </Avatar>
-        <Typography variant='h3' mb={4} color='primary'>
-          Login
-        </Typography>
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={(credentials, formik) => onSubmit(credentials, formik)}
-        >
-          <Form>
-            <Stack spacing={5}>
-              <CustomTextField
-                name='username'
-                label='Username'
-                startAdornment={
-                  <InputAdornment position='start'>
-                    <AccountCircle />
-                  </InputAdornment>
-                }
-              />
-              <CustomTextField
-                name='password'
-                label='Password'
-                type={showPassword ? 'text' : 'password'}
-                startAdornment={
-                  <InputAdornment position='start'>
-                    <LockIcon />
-                  </InputAdornment>
-                }
-                endAdornment={
-                  <InputAdornment position='end'>
-                    <IconButton
-                      aria-label='toggle password visibility'
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge='end'
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-              />
-
-              <LoadingButton
-                variant='contained'
-                color='primary'
-                loading={isLoading}
-                loadingPosition='center'
-                type='submit'
-                size='large'
-              >
-                Login
-              </LoadingButton>
-            </Stack>
-          </Form>
-        </Formik>
-        <Typography mt={5}>
-          Don&apos;t have an account?
-          <Typography
-            component='span'
-            color={theme.palette.primary.main}
-            ml={1}
-          >
-            <NextLink href='/register'>Sign Up</NextLink>
+    <>
+      <Head>
+        <title>Ninja Sports | Login</title>
+        <meta name='Login page' content='login form' />
+      </Head>
+      <Container maxWidth='sm' sx={sxContainer}>
+        <Box sx={sxBox}>
+          <Avatar sx={sxAvatar}>
+            <ExitToAppIcon fontSize='large' />
+          </Avatar>
+          <Typography variant='h2' mb={4} fontSize={'24px'}>
+            Login
           </Typography>
-        </Typography>
-      </Box>
-    </Container>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={(credentials, formik) => onSubmit(credentials, formik)}
+          >
+            <Form>
+              <Stack spacing={5}>
+                <CustomTextField
+                  name='username'
+                  label='Username'
+                  startAdornment={
+                    <InputAdornment position='start'>
+                      <AccountCircle />
+                    </InputAdornment>
+                  }
+                />
+                <CustomTextField
+                  name='password'
+                  label='Password'
+                  type={showPassword ? 'text' : 'password'}
+                  startAdornment={
+                    <InputAdornment position='start'>
+                      <LockIcon />
+                    </InputAdornment>
+                  }
+                  endAdornment={
+                    <InputAdornment position='end'>
+                      <IconButton
+                        aria-label='toggle password visibility'
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge='end'
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+
+                <LoadingButton
+                  variant='contained'
+                  color='primary'
+                  loading={isLoading}
+                  loadingPosition='center'
+                  type='submit'
+                  size='large'
+                >
+                  Login
+                </LoadingButton>
+              </Stack>
+            </Form>
+          </Formik>
+          <Typography mt={5}>
+            Don&apos;t have an account?
+            <Typography
+              component='span'
+              color={theme.palette.primary.main}
+              ml={1}
+            >
+              <NextLink href='/register'>Sign Up</NextLink>
+            </Typography>
+          </Typography>
+        </Box>
+      </Container>
+    </>
   )
 }
 

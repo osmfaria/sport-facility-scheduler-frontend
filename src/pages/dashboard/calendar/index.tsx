@@ -18,6 +18,7 @@ import { useEffect } from 'react'
 import CustomSelect from '../../../components/forms/CustomSelect'
 import NoCourtsByFacilityCard from '../../../components/cards/NoCourtsByFacilityCard'
 import NoFacilityCard from '../../../components/cards/NoFacilityCard'
+import Head from 'next/head'
 
 const Calendar = () => {
   const {
@@ -87,71 +88,77 @@ const Calendar = () => {
   }
 
   return (
-    <Container maxWidth='lg' sx={sxContainer}>
-      <Typography variant='h1' fontSize='1.5rem' fontWeight='500' ml='10px'>
-        Calendar
-      </Typography>
+    <>
+      <Head>
+        <title>Ninja Sports | Calendar</title>
+        <meta name='Court Calendar' content='calendar manager' />
+      </Head>
+      <Container maxWidth='lg' sx={sxContainer}>
+        <Typography variant='h1' fontSize='1.5rem' fontWeight='500' ml='10px'>
+          Calendar
+        </Typography>
 
-      {!isLoadingFacilityByOwner && !chosenFacility ? (
-        <NoFacilityCard />
-      ) : (
-        <>
-          <Box margin={'44px 0'}>
-            <Grid
-              container
-              alignItems='center'
-              justifyContent='center'
-              rowSpacing={3}
-              columnSpacing={1}
+        {!isLoadingFacilityByOwner && !chosenFacility ? (
+          <NoFacilityCard />
+        ) : (
+          <>
+            <Box margin={'44px 0'}>
+              <Grid
+                container
+                alignItems='center'
+                justifyContent='center'
+                rowSpacing={3}
+                columnSpacing={1}
+              >
+                <Grid item xs={12} sm={6}>
+                  <CustomSelect
+                    isLoading={isLoadingFacilityByOwner}
+                    item={chosenFacility}
+                    itemArray={facilitiesByOwner}
+                    handleChange={handleChangeFacility}
+                    helperText='Facility'
+                    icon={<Stadium sx={sxIcon} />}
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                  <CustomSelect
+                    isLoading={isLoadingFacilityByOwner}
+                    item={chosenCourt}
+                    itemArray={chosenFacility?.courts}
+                    handleChange={handleChangeCourt}
+                    helperText='Sport Venue'
+                    icon={<List sx={sxIcon} />}
+                  />
+                </Grid>
+              </Grid>
+            </Box>
+
+            <Box
+              sx={{
+                position: 'relative',
+                height: '6px',
+              }}
             >
-              <Grid item xs={12} sm={6}>
-                <CustomSelect
-                  isLoading={isLoadingFacilityByOwner}
-                  item={chosenFacility}
-                  itemArray={facilitiesByOwner}
-                  handleChange={handleChangeFacility}
-                  helperText='Facility'
-                  icon={<Stadium sx={sxIcon} />}
-                />
-              </Grid>
+              {isLoadingFacilityByOwner && !chosenCourt && (
+                <LinearProgress sx={{ width: '100%', position: 'absolute' }} />
+              )}
+            </Box>
 
-              <Grid item xs={12} sm={6}>
-                <CustomSelect
-                  isLoading={isLoadingFacilityByOwner}
-                  item={chosenCourt}
-                  itemArray={chosenFacility?.courts}
-                  handleChange={handleChangeCourt}
-                  helperText='Sport Venue'
-                  icon={<List sx={sxIcon} />}
-                />
-              </Grid>
-            </Grid>
-          </Box>
-
-          <Box
-            sx={{
-              position: 'relative',
-              height: '6px',
-            }}
-          >
-            {isLoadingFacilityByOwner && !chosenCourt && (
-              <LinearProgress sx={{ width: '100%', position: 'absolute' }} />
+            {!isLoadingFacilityByOwner && !chosenCourt && (
+              <NoCourtsByFacilityCard />
             )}
-          </Box>
 
-          {!isLoadingFacilityByOwner && !chosenCourt && (
-            <NoCourtsByFacilityCard />
-          )}
-
-          {chosenCourt && (
-            <>
-              <CalendarOptions chosenCourt={chosenCourt} />
-              <FullCalendarView chosenCourt={chosenCourt} />
-            </>
-          )}
-        </>
-      )}
-    </Container>
+            {chosenCourt && (
+              <>
+                <CalendarOptions chosenCourt={chosenCourt} />
+                <FullCalendarView chosenCourt={chosenCourt} />
+              </>
+            )}
+          </>
+        )}
+      </Container>
+    </>
   )
 }
 

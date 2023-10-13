@@ -17,7 +17,7 @@ import { Court } from 'interfaces/providerInterface'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import { MonetizationOn } from '@mui/icons-material'
 import { convertToCurrency, convertToHour } from '@/utils/functions'
-import { ReactElement } from 'react'
+import { ReactElement, useEffect } from 'react'
 import { useSteps } from 'providers/StepsProvider'
 import {
   sxCardAction,

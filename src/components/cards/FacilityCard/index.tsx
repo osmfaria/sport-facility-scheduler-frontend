@@ -29,9 +29,10 @@ const FacilityCard = () => {
         color='Background'
         sx={sxStack}
         m='auto'
+        position='relative'
       >
         <Avatar>
-          <Stadium />
+          <Stadium sx={{ color: '#fff' }} />
         </Avatar>
         <Typography variant='h6' fontWeight='600'>
           {facility!.name}

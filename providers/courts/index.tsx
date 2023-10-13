@@ -21,6 +21,7 @@ export const CourtProvider = ({ children }: childrenProp) => {
   const [courts, setCourts] = useState<Court[]>([])
   const [city, setCity] = useState<string>('')
   const [court, setCourt] = useState<Court | undefined>()
+  const [sport, setSport] = useState<string>('')
   const [courtId, setCourtId] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const router = useRouter()
@@ -63,6 +64,10 @@ export const CourtProvider = ({ children }: childrenProp) => {
 
   const selectCity = (name: string): void => {
     setCity(name)
+  }
+
+  const selectSport = (sport: string): void => {
+    setSport(sport)
   }
 
   const createCourt = async (token: string, data: CreateCourtProp) => {
@@ -135,6 +140,8 @@ export const CourtProvider = ({ children }: childrenProp) => {
         isLoading,
         updateCourt,
         createCourtDaysOff,
+        sport,
+        selectSport,
       }}
     >
       {children}

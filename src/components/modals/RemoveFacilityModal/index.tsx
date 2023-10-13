@@ -35,8 +35,11 @@ const RemoveFacilityModal = ({
         </DialogContentText>
       </DialogContent>
       <DialogActions>
+        <Button variant='outlined' onClick={handleClose}>
+          Go back
+        </Button>
         <LoadingButton
-          variant='text'
+          variant='contained'
           color='error'
           loading={isLoading}
           loadingPosition='start'
@@ -45,9 +48,6 @@ const RemoveFacilityModal = ({
         >
           Delete
         </LoadingButton>
-        <Button variant='outlined' onClick={handleClose}>
-          Go back
-        </Button>
       </DialogActions>
     </Dialog>
   )

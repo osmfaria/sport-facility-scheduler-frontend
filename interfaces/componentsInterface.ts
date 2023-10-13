@@ -38,15 +38,8 @@ export interface HourCardProp {
   hour: number
 }
 
-export interface CustomAnimationProp {
-  children: ReactNode
-  direction: 'left' | 'right'
-}
-
 export interface SectionMarkerProp {
   children: ReactNode
-  firstColor: string
-  secondColor: string
 }
 
 export interface CancelEventCardProps {
@@ -103,4 +96,17 @@ export interface CustomSelectProps {
   handleChange: (event: SelectChangeEvent) => void
   helperText: string
   icon: ReactNode
+}
+
+export interface SportsCardProps {
+  sport: string
+  imagePath: string
+  logoPath: string
+}
+
+export interface CarouselCardProps {
+  name: string
+  rating: number
+  picturePath: string
+  children: ReactNode
 }

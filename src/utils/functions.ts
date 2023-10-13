@@ -1,14 +1,17 @@
 import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
 import { Court } from 'interfaces/providerInterface'
-import { ObjectType } from 'typescript'
+
+dayjs.extend(customParseFormat)
 
 export const convertToHour = (input: string): string => {
-  try {
-    return dayjs(input, 'HH:mm:ss').format('h:mm a')
-  } catch (error) {
-    console.error(`Error converting to hour: ${error}`)
+  const time = dayjs(input.trim(), 'HH:mm:ss')
+
+  if (!time.isValid()) {
     return 'Invalid time'
   }
+
+  return time.format('h:mm a')
 }
 
 export const convertToCurrency = (input: string | number): string => {
@@ -69,5 +72,3 @@ export const getDirtyValues = (updatedValues: any, initialValues: any): any => {
   if (Object.keys(data).length > 0) return data
   else return null
 }
-
-

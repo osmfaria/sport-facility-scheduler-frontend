@@ -1,12 +1,15 @@
 import { SxProps, Theme } from '@mui/material'
 
-export const sxBox = (theme: Theme) => ({
+export const sxBox = (route: string) => (theme: Theme) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
-  backgroundColor: theme.palette.background.default,
+  background:
+    route === '/' ? theme.palette.background.default : 'url("/blurry-bg.svg")',
+  backgroundSize: 'cover',
 })
 
 export const sxBoxMain: SxProps = {
-  minHeight: 'calc(100vh - 149px)',
+  marginTop: '74px',
+  minHeight: 'calc(100vh - 159px)',
 }

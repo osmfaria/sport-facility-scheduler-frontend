@@ -1,5 +1,4 @@
-// 67d5b51c-4362-487d-86cb-994861a3e314
-
+import { sxDivider } from '@/styles/courtmanager.styles'
 import CourtsGrid from '../../components/CourtsGrid/CourtsGrid'
 import {
   FacilityCard,
@@ -11,6 +10,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useFacility } from 'providers/FacilityProvider'
 import { useEffect } from 'react'
+import Head from 'next/head'
 
 const Facility = () => {
   const router = useRouter()
@@ -28,32 +28,29 @@ const Facility = () => {
   }, [session])
 
   return (
-    <Container maxWidth='lg' sx={{ marginTop: '40px' }}>
-      {isLoadingFacility ? (
-        <FacilityCardSkeleton />
-      ) : (
-        facility && <FacilityCard />
-      )}
+    <>
+      <Head>
+        <title>Ninja Sports | Facility</title>
+        <meta name='Facility page' content='facility data' />
+      </Head>
+      <Container maxWidth='lg' sx={{ marginTop: '40px' }}>
+        {isLoadingFacility || !facility ? (
+          <FacilityCardSkeleton />
+        ) : (
+          facility && <FacilityCard />
+        )}
 
-      <Divider>
-        <Box
-          height='30px'
-          padding='0 15px'
-          m='20px 0'
-          sx={{
-            background: 'linear-gradient(to right, #ee0979, #ff6a00)',
-            borderRadius: '30px',
-            boxShadow: 1,
-          }}
-        >
-          <Typography variant='overline' color='white' fontWeight='600'>
-            Sport Venues
-          </Typography>
-        </Box>
-      </Divider>
+        <Divider>
+          <Box height='30px' padding='0 15px' m='20px 0' sx={sxDivider}>
+            <Typography variant='overline' color='white' fontWeight='600'>
+              Sport Venues
+            </Typography>
+          </Box>
+        </Divider>
 
-      <CourtsGrid source='facility' />
-    </Container>
+        <CourtsGrid source='facility' />
+      </Container>
+    </>
   )
 }
 

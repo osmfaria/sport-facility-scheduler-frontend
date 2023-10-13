@@ -1,5 +1,7 @@
 import { Container } from '@mui/system'
 import {
+  Box,
+  Chip,
   CircularProgress,
   Grid,
   IconButton,
@@ -26,6 +28,7 @@ import { useSchedule } from 'providers/schedule'
 import CustomStepper from '../../components/Misc/CustomStepper'
 import { useSteps } from 'providers/StepsProvider'
 import { containerStyles, inputStyles } from '@/styles/courts.styles'
+import Head from 'next/head'
 
 export default function Home() {
   const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false)
@@ -38,6 +41,8 @@ export default function Home() {
     city,
     selectCity,
     isLoadingCourts,
+    sport,
+    selectSport,
   } = useCourt()
   const { selectCurrentStep } = useSteps()
 
@@ -57,8 +62,8 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    getCourtsByLocationAndTime(selectedDate)
-  }, [selectedDate])
+    getCourtsByLocationAndTime(selectedDate, sport)
+  }, [selectedDate, sport])
 
   const handleLocation = () => {
     if (navigator.geolocation) {
@@ -103,7 +108,7 @@ export default function Home() {
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (selectedDate.toString() !== 'Invalid Date') {
-      getCourtsByLocationAndTime(selectedDate)
+      getCourtsByLocationAndTime(selectedDate, sport)
     }
   }
 
@@ -114,13 +119,17 @@ export default function Home() {
   const handleKeyPress = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter') {
       if (selectedDate.toString() !== 'Invalid Date' && city.length > 0) {
-        getCourtsByLocationAndTime(selectedDate)
+        getCourtsByLocationAndTime(selectedDate, sport)
       }
     }
   }
 
   return (
     <>
+      <Head>
+        <title>Ninja Sports | Search</title>
+        <meta name='Login page' content='login form' />
+      </Head>
       <Container sx={containerStyles}>
         <FilterDrawer isOpen={isFilterOpen} handleDrawer={handleFilterDrawer} />
         <CustomStepper />
@@ -195,6 +204,16 @@ export default function Home() {
             </Grid>
           </Grid>
         </form>
+        <Box m='20px 0'>
+          {sport && (
+            <Chip
+              variant='outlined'
+              color='primary'
+              label={sport}
+              onDelete={() => selectSport('')}
+            />
+          )}
+        </Box>
 
         <CourtsGrid source='schedule' />
       </Container>

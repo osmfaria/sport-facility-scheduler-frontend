@@ -35,7 +35,9 @@
     "global.d.ts",
     "**/*.test.tsx",
     "src/pages/api/auth/[...nextauth].js",
-    "src/pages/dashboard/facilitymanager/newfacility/teste.tsx"
+    "src/pages/dashboard/facilitymanager/newfacility/teste.tsx",
+    "src/components/Icons.js",
+    "src/components/Icons.js"
   ],
   "exclude": ["node_modules", "cypress.config.ts"]
 }

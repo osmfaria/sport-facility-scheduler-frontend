@@ -61,6 +61,8 @@ export const FacilityProvider = ({ children }: childrenProp) => {
     facilityId: string,
     token: string
   ): Promise<void> => {
+    setIsLoadingFacility(true)
+
     API.get(`sport_facilities/${facilityId}/`, {
       headers: {
         Authorization: `Token ${token}`,
@@ -68,9 +70,11 @@ export const FacilityProvider = ({ children }: childrenProp) => {
     })
       .then((res) => {
         setFacility(res.data)
-        const { number, street, city, state } = res.data.address
+        const { address1, address2, city, state, country } = res.data.address
         setAddressString(
-          `${number} ${capitalize(street)}, ${capitalize(city)}, ${state}`
+          `${capitalize(address1)}, ${address2 && address2 + ','} ${capitalize(
+            city
+          )}, ${state}, ${country}`
         )
       })
       .catch((err) => {

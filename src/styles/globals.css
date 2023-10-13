@@ -1,1 +1,41 @@
+@font-face {
+  font-family: Mulish;
+  src: url('../../public/fonts/Mulish/Mulish-Medium.ttf');
+  format: ('ttf');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
 
+@font-face {
+  font-family: 'Poppins-Bold';
+  src: url('../../public/fonts/Poppins/Poppins-Bold.ttf');
+  format: ('ttf');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 12px;
+  border-radius: 100vw;
+  background-color: #d3d3d3;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 100vw;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #ee0979, #ff6a00);
+  border-radius: 100vw;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  filter: brightness(20%);
+}
