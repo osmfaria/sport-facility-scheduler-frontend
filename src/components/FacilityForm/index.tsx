@@ -17,6 +17,7 @@ import { Facility } from 'interfaces/providerInterface'
 import { getDirtyValues } from '@/utils/functions'
 import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
+import { SetFieldValueType } from 'interfaces/registerInterface'
 
 function FacilityForm({ facility }: { facility: Facility }): ReactElement {
   const [latlng, setLatlng] = useState<string>('')
@@ -100,7 +101,7 @@ function FacilityForm({ facility }: { facility: Facility }): ReactElement {
   })
 
   const handleAddressSelect = async (
-    setFieldValue: FormikHelpers<string>['setFieldValue']
+    setFieldValue: SetFieldValueType
   ): Promise<void> => {
     let addressObj = await googleAutoComplete.getFullAddress(autoComplete)
 
@@ -178,7 +179,7 @@ function FacilityForm({ facility }: { facility: Facility }): ReactElement {
       validationSchema={validationSchema}
       onSubmit={(data, formik) => onSubmit(data, formik)}
     >
-      {({ errors, touched, setFieldValue, handleChange, values }) => {
+      {({ errors, touched, setFieldValue }) => {
         // eslint-disable-next-line
         useEffect(() => {
           const loadGoogleMaps = async (): Promise<void> => {

@@ -25,6 +25,7 @@ import { useSession } from 'next-auth/react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import Head from 'next/head'
+import { SetFieldValueType } from 'interfaces/registerInterface'
 
 function NewFacility(): ReactElement {
   const [latlng, setLatlng] = useState<string>('')
@@ -103,7 +104,7 @@ function NewFacility(): ReactElement {
   })
 
   const handleAddressSelect = async (
-    setFieldValue: FormikHelpers<string>['setFieldValue']
+    setFieldValue: SetFieldValueType
   ): Promise<void> => {
     let addressObj = await googleAutoComplete.getFullAddress(autoComplete)
 

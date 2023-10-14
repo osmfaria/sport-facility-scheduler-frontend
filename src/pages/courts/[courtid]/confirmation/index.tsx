@@ -42,8 +42,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   // Check if the route that requested this page matches the regex, otherwise redirect home
   const allowedReferrerPattern = new RegExp(
-    `^http://${baseUrl}/courts/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/booking`
+    `^https?:\/\/${baseUrl}/courts/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/booking`
   )
+
+  console.log(allowedReferrerPattern)
 
   if (!allowedReferrerPattern.test(referrer)) {
     return {
