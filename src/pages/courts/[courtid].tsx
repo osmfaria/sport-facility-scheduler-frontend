@@ -16,7 +16,6 @@ import {
 import { buttonStyles, containerStyles } from '@/styles/courts.[courtid]'
 import { useSchedule } from 'providers/schedule'
 import Head from 'next/head'
-import { useSession } from 'next-auth/react'
 dayjs.extend(advancedFormat)
 
 const Court = () => {
@@ -26,7 +25,6 @@ const Court = () => {
   const { court, getCourt, isLoadingCourt } = useCourt()
   const { getAddress, address } = useFacility()
   const { selectCurrentStep, handleBack, handleNext } = useSteps()
-  const { data: session } = useSession()
 
   useEffect(() => {
     selectTimeSlot(0) // Reset time slot state
@@ -48,27 +46,14 @@ const Court = () => {
       </Head>
       <Container maxWidth='lg' sx={containerStyles}>
         <CustomStepper />
-        {!!session ? (
-          <Button
-            variant='contained'
-            endIcon={<ArrowCircleRightOutlined />}
-            sx={buttonStyles}
-            onClick={() => handleNext(`/courts/${courtid}/booking`)}
-          >
-            Continue
-          </Button>
-        ) : (
-          <Button
-            variant='contained'
-            endIcon={<ArrowCircleRightOutlined />}
-            sx={buttonStyles}
-            onClick={() =>
-              handleNext(`/login?callbackUrl=/courts/${courtid}/booking`)
-            }
-          >
-            Login to Continue
-          </Button>
-        )}
+        <Button
+          variant='contained'
+          endIcon={<ArrowCircleRightOutlined />}
+          sx={buttonStyles}
+          onClick={() => handleNext(`/courts/${courtid}/booking`)}
+        >
+          Continue
+        </Button>
         <Button
           variant='outlined'
           startIcon={<ArrowCircleLeftOutlined />}

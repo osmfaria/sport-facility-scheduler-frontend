@@ -28,18 +28,18 @@ import {
 } from './styles'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import { useSession } from 'next-auth/react'
 
 const CourtCard = ({ court }: { court: Court }): ReactElement => {
   const router = useRouter()
+  const { data: session } = useSession()
   const startingHour = convertToHour(court.opening_hour)
   const closingHour = convertToHour(court.closing_hour)
   const price = convertToCurrency(court.price_by_hour)
   const { handleNext } = useSteps()
 
   const handleClick = (): void => {
-    // handleNext(`/courts/${court.id}`)
-    console.log('pushing court: ', court)
-    router.push(`/courts/${court.id}`)
+    handleNext(`/courts/${court.id}`)
   }
 
   return (
@@ -77,11 +77,23 @@ const CourtCard = ({ court }: { court: Court }): ReactElement => {
       </CardContent>
       <Divider sx={sxDivider} />
       <CardActions disableSpacing sx={sxCardAction}>
-        <Link href={`/courts/${court.id}`}>
-          <Button size='medium' variant='contained'>
+        {!!session ? (
+          <Button
+            size='medium'
+            variant='contained'
+            onClick={() => handleNext(`/courts/${court.id}`)}
+          >
             Book
           </Button>
-        </Link>
+        ) : (
+          <Button
+            size='small'
+            variant='contained'
+            onClick={() => handleNext(`/login?callbackUrl=/courts/${court.id}`)}
+          >
+            Login to Book
+          </Button>
+        )}
       </CardActions>
     </Card>
   )
