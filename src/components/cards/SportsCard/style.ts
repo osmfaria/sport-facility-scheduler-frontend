@@ -12,14 +12,11 @@ export const sxBox: SxProps = {
       'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
     transform: 'scale(1.05)',
   },
+  '& .categoryImage': {
+    objectFit: 'contain',
+    objectPosition: 'top',
+  },
 }
-
-export const sxImage = (imagePath: string) => ({
-  background: `url("${imagePath}")`,
-  backgroundSize: 'cover',
-  width: '100%',
-  height: '70%',
-})
 
 export const sxDescriptionBox = (theme: Theme) => ({
   background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,

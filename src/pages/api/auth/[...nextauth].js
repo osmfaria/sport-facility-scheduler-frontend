@@ -14,7 +14,17 @@ const loginUser = async (credentials) => {
 export default NextAuth({
   providers: [
     CredentialsProvider({
+      id: 'credentials',
       name: 'Django Backend',
+
+      credentials: {
+        email: {
+          label: 'username',
+          type: 'text',
+          placeholder: 'odin',
+        },
+        password: { label: 'Password', type: 'password' },
+      },
 
       async authorize(credentials) {
         const user = await loginUser(credentials)
@@ -27,7 +37,7 @@ export default NextAuth({
   ],
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: '/sign',
+    signIn: '/login',
   },
   session: {
     maxAge: 60 * 60 * 72,
@@ -50,7 +60,7 @@ export default NextAuth({
           id: token.id,
           is_owner: token.is_owner,
           email: token.email,
-        }
+        },
       }
       return updatedSession
     },

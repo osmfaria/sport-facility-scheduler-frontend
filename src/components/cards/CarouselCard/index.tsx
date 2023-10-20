@@ -16,8 +16,6 @@ const CarouselCard = ({
   picturePath,
   children,
 }: CarouselCardProps) => {
-  const imageLoader = () => picturePath
-
   return (
     <Box position='relative' maxWidth='800px' minHeight='300px' m='auto'>
       <Box
@@ -37,8 +35,7 @@ const CarouselCard = ({
           <Box height='100%' minWidth='30%'>
             <Box sx={sxImageWrapper}>
               <Image
-                loader={imageLoader}
-                src={`${name}.png`}
+                src={picturePath}
                 alt='cloud'
                 fill
                 priority

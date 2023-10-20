@@ -1,7 +1,6 @@
 import { Box, Button, Typography } from '@mui/material'
 import Image from 'next/image'
 import {
-  sxImage,
   sxBox,
   sxDescriptionBox,
   sxDescription,
@@ -26,13 +25,19 @@ const SportsCard = ({ sport, imagePath, logoPath }: SportsCardProps) => {
 
   return (
     <Box
-      height='400px'
+      height='320px'
       maxWidth='300px'
       width='100vw'
       sx={sxBox}
       onClick={handleClick}
     >
-      <Box sx={sxImage(imagePath)}></Box>
+      <Image
+        className='categoryImage'
+        src={imagePath}
+        alt='sport category'
+        fill
+        sizes='(max-width: 768px) 90vw, (max-width: 1200px) 33vw, 33vw'
+      />
       <Box sx={sxDescriptionBox}></Box>
       <Box sx={sxLogo} className='logo'>
         <Image

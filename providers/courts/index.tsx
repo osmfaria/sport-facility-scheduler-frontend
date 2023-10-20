@@ -2,11 +2,7 @@ import { createContext, useContext, useState } from 'react'
 import { childrenProp } from 'interfaces/utilityInterface'
 import dayjs from 'dayjs'
 import API from 'services/api'
-import {
-  Court,
-  CourtProviderContext,
-  HolidayProp,
-} from 'interfaces/providerInterface'
+import { Court, CourtProviderContext } from 'interfaces/providerInterface'
 import { CreateCourtProp, UpdateCourtProp } from 'interfaces/courtInterface'
 import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'

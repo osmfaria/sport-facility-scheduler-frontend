@@ -45,7 +45,7 @@ const AvailableTimeCard = () => {
     const accessToken = (session as CustomSession).user.accessToken
     const res = await bookCourt(courtid as string, numberOfHours, accessToken!)
     if (res === 201) {
-      router.push('/courts/7ac5dcb2-4d69-40b8-a090-4b95839c4ee4/confirmation')
+      router.push(`/courts/${courtid}/confirmation`)
     } else {
       router.push('/opss')
     }

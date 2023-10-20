@@ -117,8 +117,8 @@ export const ScheduleProvider = ({ children }: childrenProp) => {
       }
     )
       .then((res) => {
-        setIsLoadingBooking(false)
         setBookingConfirmation(res.data)
+        setIsLoadingBooking(false)
         return res.status
       })
       .catch((err) => {

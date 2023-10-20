@@ -1,4 +1,4 @@
-import { Box, SxProps, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import { Variants, motion, useInView } from 'framer-motion'
 import { ReactNode, useRef } from 'react'
 

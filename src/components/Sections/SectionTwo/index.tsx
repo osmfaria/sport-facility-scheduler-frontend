@@ -11,6 +11,7 @@ import TestimonialsCarousel from '../../TestimonialsCarousel'
 import { useRouter } from 'next/router'
 import CustomTextAnimation from '../../customAnimations/CustomTextAnimation'
 import { sxTitle } from '../SectionThree/styles'
+import calendar from 'public/main/calendar.webp'
 
 const SectionTwo = () => {
   const router = useRouter()
@@ -159,11 +160,10 @@ const SectionTwo = () => {
             <CustomGrowAnimation>
               <Box sx={sxImageWrapper}>
                 <Image
-                  src='/main/calendar.webp'
+                  src={calendar}
                   alt='calendar'
                   fill
-                  priority
-                  sizes='(max-width: 768px) 90vw, (max-width: 1200px) 50vw, 40vw'
+                  sizes='(max-width: 768px) 90vw, (max-width: 1200px) 50vw, 30vw'
                 />
               </Box>
             </CustomGrowAnimation>

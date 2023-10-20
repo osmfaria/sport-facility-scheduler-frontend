@@ -13,17 +13,21 @@ const CustomStepper = () => {
 
   return (
     <Box sx={sxBox}>
-      <Stepper
-        activeStep={activeStep}
-        alternativeLabel
-        connector={<ColorlibConnector />}
-      >
-        {steps.map((label) => (
-          <Step key={label}>
-            <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
+      {steps && (
+        <Stepper
+          activeStep={activeStep}
+          alternativeLabel
+          connector={<ColorlibConnector />}
+        >
+          {steps.map((label) => (
+            <Step key={label}>
+              <StepLabel StepIconComponent={ColorlibStepIcon}>
+                {label}
+              </StepLabel>
+            </Step>
+          ))}
+        </Stepper>
+      )}
     </Box>
   )
 }

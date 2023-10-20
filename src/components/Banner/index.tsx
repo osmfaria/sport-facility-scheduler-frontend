@@ -4,12 +4,21 @@ import { useRouter } from 'next/router'
 import { Map } from '@mui/icons-material'
 import CustomTextAnimation from '../customAnimations/CustomTextAnimation'
 import CustomSlideAnimation from '../customAnimations/CustomSlideAnimation'
+import Image from 'next/image'
 
 function Banner() {
   const router = useRouter()
 
   return (
     <Box sx={boxStyles}>
+      <Image
+        className='bgimage'
+        src='/main/sports-small.jpg'
+        alt='Sports examples'
+        fill
+        sizes='100vw'
+        priority
+      />
       <Box
         textAlign='center'
         margin={{ xs: '15px auto', md: '60px auto' }}

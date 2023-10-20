@@ -5,3 +5,7 @@ export const sxButton: SxProps = {
   borderColor: '#d3d3d3',
   marginRight: '3px',
 }
+
+export const sxTableCell: SxProps = {
+  whiteSpace: 'nowrap',
+}

@@ -22,7 +22,7 @@ const NoTimeAvailableCard = () => {
           </Typography>
 
           <Typography variant='body2' color='GrayText'>
-            kindly explore alternative dates
+            Explore alternative dates
           </Typography>
         </Box>
       </Stack>

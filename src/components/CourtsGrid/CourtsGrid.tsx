@@ -34,7 +34,7 @@ const CourtsGrid = ({
             <CourtCardSkeleton />
           </Grid>
         ))
-      ) : courtsArray!.length > 0 ? (
+      ) : courtsArray && courtsArray.length > 0 ? (
         courtsArray!.map((court: Court) => (
           <Grid item zeroMinWidth key={court.id} sx={sxGrid}>
             <CourtCard court={court} />

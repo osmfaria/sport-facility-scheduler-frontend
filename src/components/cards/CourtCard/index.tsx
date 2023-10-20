@@ -26,15 +26,20 @@ import {
   sxDividerSkeleton,
   sxDivider,
 } from './styles'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 const CourtCard = ({ court }: { court: Court }): ReactElement => {
+  const router = useRouter()
   const startingHour = convertToHour(court.opening_hour)
   const closingHour = convertToHour(court.closing_hour)
   const price = convertToCurrency(court.price_by_hour)
   const { handleNext } = useSteps()
 
   const handleClick = (): void => {
-    handleNext(`/courts/${court.id}`)
+    // handleNext(`/courts/${court.id}`)
+    console.log('pushing court: ', court)
+    router.push(`/courts/${court.id}`)
   }
 
   return (
@@ -72,9 +77,11 @@ const CourtCard = ({ court }: { court: Court }): ReactElement => {
       </CardContent>
       <Divider sx={sxDivider} />
       <CardActions disableSpacing sx={sxCardAction}>
-        <Button size='medium' variant='contained' onClick={handleClick}>
-          Book
-        </Button>
+        <Link href={`/courts/${court.id}`}>
+          <Button size='medium' variant='contained'>
+            Book
+          </Button>
+        </Link>
       </CardActions>
     </Card>
   )

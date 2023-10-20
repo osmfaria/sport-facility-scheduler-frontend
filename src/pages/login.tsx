@@ -10,7 +10,7 @@ import {
 } from '@mui/material'
 import { Stack } from '@mui/system'
 import { Formik, Form, FormikHelpers } from 'formik'
-import { ReactElement, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 import * as yup from 'yup'
 import CustomTextField from '../components/CustomTextField'
 import { AccountCircle, Visibility, VisibilityOff } from '@mui/icons-material'
@@ -24,11 +24,18 @@ import { sxAvatar, sxBox, sxContainer } from '@/styles/login.styles'
 import Head from 'next/head'
 
 function Login(): ReactElement {
-  const [isLoading, setIsLoading] = useState<boolean>()
-  const [showPassword, setShowPassword] = useState<boolean>()
+  const [showPassword, setShowPassword] = useState<boolean>(false)
   const router = useRouter()
   const theme = useTheme()
-  const callbackUrl = router.query.callbackUrl
+  const callbackUrl = router.query.callbackUrl || '/'
+
+  useEffect(() => {
+    router.events.on('routeChangeError', (err) => console.log(err))
+
+    return () => {
+      router.events.off('routeChangeError', (err) => console.log(err))
+    }
+  })
 
   const initialValues = {
     username: '',
@@ -44,24 +51,22 @@ function Login(): ReactElement {
     credentials: LoginUserProps,
     formik: FormikHelpers<LoginUserProps>
   ): Promise<void> => {
-    setIsLoading(true)
     const res = await signIn('credentials', {
       redirect: false,
       username: credentials.username,
       password: credentials.password,
+      callbackUrl: `${window.location.origin}`,
     })
-    if (res && !res.error) {
-      // Redirect to the desired page after successful login
-      if (callbackUrl) router.push(callbackUrl as string)
-      else router.push('/')
-      setIsLoading(false)
+
+    if (res && !res.error && res.url) {
+      router.push(callbackUrl as string)
     } else {
-      setIsLoading(false)
       formik.setErrors({
         username: 'invalid username or password',
         password: 'invalid username or password',
       })
     }
+    formik.setSubmitting(false)
   }
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
@@ -90,52 +95,54 @@ function Login(): ReactElement {
             validationSchema={validationSchema}
             onSubmit={(credentials, formik) => onSubmit(credentials, formik)}
           >
-            <Form>
-              <Stack spacing={5}>
-                <CustomTextField
-                  name='username'
-                  label='Username'
-                  startAdornment={
-                    <InputAdornment position='start'>
-                      <AccountCircle />
-                    </InputAdornment>
-                  }
-                />
-                <CustomTextField
-                  name='password'
-                  label='Password'
-                  type={showPassword ? 'text' : 'password'}
-                  startAdornment={
-                    <InputAdornment position='start'>
-                      <LockIcon />
-                    </InputAdornment>
-                  }
-                  endAdornment={
-                    <InputAdornment position='end'>
-                      <IconButton
-                        aria-label='toggle password visibility'
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge='end'
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
+            {(formik) => (
+              <Form>
+                <Stack spacing={5}>
+                  <CustomTextField
+                    name='username'
+                    label='Username'
+                    startAdornment={
+                      <InputAdornment position='start'>
+                        <AccountCircle />
+                      </InputAdornment>
+                    }
+                  />
+                  <CustomTextField
+                    name='password'
+                    label='Password'
+                    type={showPassword ? 'text' : 'password'}
+                    startAdornment={
+                      <InputAdornment position='start'>
+                        <LockIcon />
+                      </InputAdornment>
+                    }
+                    endAdornment={
+                      <InputAdornment position='end'>
+                        <IconButton
+                          aria-label='toggle password visibility'
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge='end'
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                  />
 
-                <LoadingButton
-                  variant='contained'
-                  color='primary'
-                  loading={isLoading}
-                  loadingPosition='center'
-                  type='submit'
-                  size='large'
-                >
-                  Login
-                </LoadingButton>
-              </Stack>
-            </Form>
+                  <LoadingButton
+                    variant='contained'
+                    color='primary'
+                    loading={formik.isSubmitting}
+                    loadingPosition='center'
+                    type='submit'
+                    size='large'
+                  >
+                    Login
+                  </LoadingButton>
+                </Stack>
+              </Form>
+            )}
           </Formik>
           <Typography mt={5}>
             Don&apos;t have an account?

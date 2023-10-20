@@ -45,8 +45,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     `^https?:\/\/${baseUrl}/courts/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/booking`
   )
 
-  console.log(allowedReferrerPattern)
-
   if (!allowedReferrerPattern.test(referrer)) {
     return {
       redirect: {

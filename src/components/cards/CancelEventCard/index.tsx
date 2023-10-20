@@ -26,7 +26,6 @@ import { CancelEventCardProps } from 'interfaces/componentsInterface'
 import { useSchedule } from 'providers/schedule'
 import { useSession } from 'next-auth/react'
 import { LoadingButton } from '@mui/lab'
-import { useFacility } from 'providers/FacilityProvider'
 
 const CancelEventCard = ({
   isOpen,

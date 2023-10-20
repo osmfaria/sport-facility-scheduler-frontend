@@ -1,4 +1,3 @@
-import { error } from 'console'
 import { UserProviderContext } from 'interfaces/providerInterface'
 import {
   RegisterProps,

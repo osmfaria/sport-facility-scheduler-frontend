@@ -2,7 +2,7 @@ import { Button, IconButton, TableCell, TableRow, Tooltip } from '@mui/material'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import { Delete } from '@mui/icons-material'
-import { sxButton } from './styles'
+import { sxButton, sxTableCell } from './styles'
 import { FacilityRowProps } from 'interfaces/componentsInterface'
 import { useRouter } from 'next/router'
 dayjs.extend(customParseFormat)
@@ -21,12 +21,12 @@ const FacilityRow = ({ facility, handleModalData }: FacilityRowProps) => {
 
   return (
     <TableRow>
-      <TableCell>{facility.name}</TableCell>
-      <TableCell>{facility.email}</TableCell>
-      <TableCell>{facility.phone_number}</TableCell>
-      <TableCell>{numberOfVenues}</TableCell>
-      <TableCell>{facility.address.city}</TableCell>
-      <TableCell>
+      <TableCell sx={sxTableCell}>{facility.name}</TableCell>
+      <TableCell sx={sxTableCell}>{facility.email}</TableCell>
+      <TableCell sx={sxTableCell}>{facility.phone_number}</TableCell>
+      <TableCell sx={sxTableCell}>{numberOfVenues}</TableCell>
+      <TableCell sx={sxTableCell}>{facility.address.city}</TableCell>
+      <TableCell sx={sxTableCell}>
         <Button
           variant='outlined'
           size='small'

@@ -29,7 +29,6 @@ export const sxLink = {
 
 const IconButtonStyles = (theme: Theme) => ({
   borderRadius: '10px',
-  // border: `1px solid #c3c3c3`,
 })
 
 export const sxIconButton = (theme: Theme) => ({

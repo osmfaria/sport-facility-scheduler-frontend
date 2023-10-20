@@ -4,7 +4,6 @@ import { Facility } from './providerInterface'
 import { Court } from './providerInterface'
 import { DateClickArg } from '@fullcalendar/interaction'
 import { SelectChangeEvent } from '@mui/material'
-import { SvgIconComponent } from '@mui/icons-material'
 
 export interface LoadingBackdropProps {
   isLoading: boolean

@@ -14,6 +14,7 @@ export const sxBackgroundColor = (theme: Theme) => ({
 })
 
 export const boxStyles: SxProps = {
+  overflow: 'hidden',
   padding: '0 16px',
   minHeight: '100vh',
   paddingTop: '40px',
@@ -21,10 +22,11 @@ export const boxStyles: SxProps = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  backgroundImage: `url(main/sports-small.webp)`,
-  backgroundSize: 'cover',
-  backgroundPosition: 'top-center',
   position: 'relative',
+  '& .bgimage': {
+    objectFit: 'cover',
+    zIndex: 0,
+  },
   '&:after': {
     content: '""',
     position: 'absolute',
