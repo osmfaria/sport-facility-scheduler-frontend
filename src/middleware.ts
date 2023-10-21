@@ -3,7 +3,12 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname
-  const protectedPathname = [/booking/i, /profile/i, /courts/i, /facilities/i]
+  const protectedPathname = [
+    /booking/i,
+    /profile/i,
+    /^\/courts\/.*/,
+    /^\/facilities\/.*/,
+  ]
   const ownerPathname = /dashboard/i
   const loginPathname = [/login/i, /register/i]
 

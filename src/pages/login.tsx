@@ -27,7 +27,6 @@ function Login(): ReactElement {
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const router = useRouter()
   const theme = useTheme()
-  const callbackUrl = router.query.callbackUrl || '/'
 
   useEffect(() => {
     router.events.on('routeChangeError', (err) => console.log(err))
@@ -59,6 +58,7 @@ function Login(): ReactElement {
     })
 
     if (res && !res.error && res.url) {
+      const callbackUrl = router.query.callbackUrl || '/'
       router.push(callbackUrl as string)
     } else {
       formik.setErrors({

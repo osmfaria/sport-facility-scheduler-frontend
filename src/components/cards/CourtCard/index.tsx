@@ -91,7 +91,7 @@ const CourtCard = ({ court }: { court: Court }): ReactElement => {
             variant='contained'
             onClick={() => handleNext(`/login?callbackUrl=/courts/${court.id}`)}
           >
-            Login to Book
+            Book
           </Button>
         )}
       </CardActions>
