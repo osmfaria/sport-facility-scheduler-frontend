@@ -155,7 +155,7 @@ function FacilityForm({ facility }: { facility: Facility }): ReactElement {
 
     // If any facility data was changed, a request will be made to update it
     if (facilityDataToUpdate) {
-      const res = await updateFacility(token, facility.id, data)
+      const res = await updateFacility(token, facility.id, facilityDataToUpdate)
       if (res) requestErrors = { ...requestErrors, ...res }
     }
 
