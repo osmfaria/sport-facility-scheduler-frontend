@@ -2,13 +2,16 @@
  
 # 🥷 Ninja Sports
 
-This is the frontend of an ecommerce created to allow users to buy and sell cars and motorcycles. 
+Welcome to NinjaSports, a user-friendly platform crafted to bridge athletes with local sports facilities. Whether you're searching for a basketball court, a tennis court, or any other sporting arena, NinjaSports has got you covered. With an intuitive interface powered by Next.js, styled-components, and TypeScript, users can easily locate facilities near them and book specific time slots.
 
 > Check the deployed [app](https://ninjasports.vercel.app/).
 <img src="./public/app-design.png" />
 
 💭 Cool features:\
 \
+📍 Local Facility Finder: Discover sports facilities in your vicinity. \
+⏰ Booking System: Reserve a specific time slot based on availability. \
+🏢 Business Integration: Own a sports facility? Add, manage, and oversee your facility bookings right from the platform. \
 :heavy_check_mark: Utilized NextAuth for authentication, integrated with backend requests, and managed user sessions. \
 :heavy_check_mark: Integrated Google's address autocomplete to determine time zones, aiding the backend in providing available courts.
 
