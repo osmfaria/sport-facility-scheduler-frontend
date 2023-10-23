@@ -4,6 +4,7 @@ export const sxAppBar: SxProps = {
   marginTop: '10px',
   background: 'transparent',
   boxShadow: 'none',
+  zIndex: 5,
 }
 
 export const sxToolbar: SxProps = {

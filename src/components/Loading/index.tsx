@@ -20,18 +20,6 @@ const Loading = () => {
     }
   }, [])
 
-  useEffect(() => {
-    if (loading) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'auto'
-    }
-
-    return () => {
-      document.body.style.overflow = 'auto'
-    }
-  }, [loading])
-
   return loading ? (
     <Box sx={sxBox}>
       <CircularProgress />

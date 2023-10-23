@@ -10,7 +10,7 @@ export const sxBox: SxProps = {
   padding: { xs: '10px 10px 20px', md: '20px 40px 50px' },
   background: 'rgba(255, 255, 255, 0.1)',
   backdropFilter: 'blur(20px)',
-  minHeight: '520px',
+  minHeight: '670px',
 }
 
 export const sxAvatar = (theme: Theme) => ({

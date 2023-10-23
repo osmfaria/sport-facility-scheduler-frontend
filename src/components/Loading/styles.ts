@@ -1,7 +1,7 @@
 import { SxProps } from '@mui/material'
 
 export const sxBox: SxProps = {
-  position: 'absolute',
+  position: 'fixed',
   height: '100%',
   width: '100%',
   zIndex: 10,

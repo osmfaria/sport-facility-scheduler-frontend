@@ -1,5 +1,11 @@
-import { Container, Box, Avatar, Typography } from '@mui/material'
-import React, { ReactElement, useEffect } from 'react'
+import {
+  Container,
+  Box,
+  Avatar,
+  Typography,
+  LinearProgress,
+} from '@mui/material'
+import React, { ReactElement, useEffect, useState } from 'react'
 import { sxAvatar, sxBox, sxContainer } from '@/styles/register.styles'
 import { Stadium } from '@mui/icons-material'
 import { useFacility } from 'providers/FacilityProvider'
@@ -11,7 +17,7 @@ import Head from 'next/head'
 function NewFacility(): ReactElement {
   const router = useRouter()
   const { facilityId } = router.query
-  const { getFacility, facility } = useFacility()
+  const { getFacility, facility, isLoadingFacility } = useFacility()
   const { data: session } = useSession()
 
   useEffect(() => {
@@ -35,7 +41,13 @@ function NewFacility(): ReactElement {
           <Typography variant='h2' mb={4} fontSize={'24px'}>
             Edit Facility
           </Typography>
-          {facility && <FacilityForm facility={facility} />}
+          {!isLoadingFacility && facility ? (
+            <FacilityForm facility={facility} />
+          ) : (
+            <Box>
+              <LinearProgress />
+            </Box>
+          )}
         </Box>
       </Container>
     </>

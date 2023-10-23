@@ -120,8 +120,8 @@ function SectionOne() {
                   mb='12px'
                 >
                   <Image
-                    src='/sectionIcons/register.webp'
-                    alt='user'
+                    src='/sectionIcons/rocket.webp'
+                    alt='user icon'
                     height={100}
                     width={100}
                   />

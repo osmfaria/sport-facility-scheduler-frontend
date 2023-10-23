@@ -10,7 +10,7 @@ import {
 import { Container } from '@mui/system'
 import Link from 'next/link'
 import { ReactElement } from 'react'
-import { sxContainer, sxTypography } from './styles'
+import { sxContainer, sxToolbar, sxTypography } from './styles'
 
 const Footer = (): ReactElement => {
   const currentYear = new Date().getFullYear()
@@ -19,7 +19,7 @@ const Footer = (): ReactElement => {
   return (
     <Container maxWidth='lg' sx={sxContainer} disableGutters>
       <Divider />
-      <Toolbar>
+      <Toolbar sx={sxToolbar}>
         <Typography variant='caption' component='div' sx={sxTypography}>
           &#xa9; {currentYear} - Made with ❤️ by Osmar
         </Typography>
