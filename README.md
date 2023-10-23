@@ -2,7 +2,7 @@
  
 # 🥷 Ninja Sports
 
-Welcome to NinjaSports, a user-friendly platform crafted to bridge athletes with local sports facilities. Whether you're searching for a basketball court, a tennis court, or any other sporting arena, NinjaSports has got you covered. With an intuitive interface powered by Next.js, styled-components, and TypeScript, users can easily locate facilities near them and book specific time slots.
+Welcome to NinjaSports, a user-friendly platform crafted to help locals find sports facilities. Whether you're searching for a basketball court, a tennis court, or any other sporting arena, NinjaSports has got you covered. With an intuitive interface powered by Next.js, styled-components, and TypeScript, users can easily locate facilities near them and book specific time slots.
 
 > Check the deployed [app](https://ninjasports.vercel.app/).
 <img src="./public/app-design.png" />
