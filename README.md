@@ -15,7 +15,7 @@ This is the frontend of an ecommerce created to allow users to buy and sell cars
 ## 📋 Instalation guide
 
 - Clone this repo;
-- Check the env file for settings up the variables required. (Note that in order to get the application running 2 different google maps api keys are required)
+- Check the env file for settings up the variables required. (Note that in order to get the application running 2 different google maps api keys are required);
 - On the root folder execute `npm run dev`;
 - Check the applicaton running on `http://localhost:3000/`
 
@@ -27,17 +27,10 @@ This is the frontend of an ecommerce created to allow users to buy and sell cars
   
 
 
-## 💡 Upcoming updates:
-
-- [ ] Backend cart;
-- [ ] Auction functionality.
- 
-
 ## 🔗 Links
 
-- App backend [repo](https://github.com/osmfaria/Mshop-backend);
-- [API](https://motors-ecommerce-api.herokuapp.com/) 
-- API [documentation](https://motors-ecommerce-api.herokuapp.com/api-docs/) 
+- App backend [repo](https://github.com/osmfaria/sport-facility-scheduler-backend);
+- API [documentation](https://court-scheduler.herokuapp.com/api/doc/) 
 
 ## :memo: License
 
