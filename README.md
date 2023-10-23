@@ -24,7 +24,10 @@ This is the frontend of an ecommerce created to allow users to buy and sell cars
 ## 💻 Tech stack
 
   <img src="https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" /> <img src="https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white" /> <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" /> 
-  
+
+  ## :telescope: Upcoming updates
+
+- [ ] Include payment options feature;
 
 
 ## 🔗 Links
@@ -32,6 +35,3 @@ This is the frontend of an ecommerce created to allow users to buy and sell cars
 - App backend [repo](https://github.com/osmfaria/sport-facility-scheduler-backend);
 - API [documentation](https://court-scheduler.herokuapp.com/api/doc/) 
 
-## :memo: License
-
-[MIT](./LICENSE)
