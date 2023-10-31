@@ -4,6 +4,7 @@ export const sxContainer: SxProps = {
   marginTop: '200px',
   position: 'relative',
   overflow: 'hidden',
+  paddingBottom: '80px',
 }
 
 export const sxSpan: SxProps = {

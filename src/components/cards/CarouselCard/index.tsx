@@ -1,5 +1,5 @@
 import { Box, Rating, Stack, Typography } from '@mui/material'
-import { sxCard, sxImageWrapper } from './styles'
+import { sxCard, sxDetialWrapper, sxImageWrapper } from './styles'
 import Image from 'next/image'
 import styled from '@emotion/styled'
 import { CarouselCardProps } from 'interfaces/componentsInterface'
@@ -48,12 +48,6 @@ const CarouselCard = ({
             padding={{ xs: '0 15px', md: '0 45px' }}
             height='100%'
           >
-            <Image
-              src='/sectionIcons/open-quote.svg'
-              alt='open quote'
-              height='65'
-              width='65'
-            />
             <Stack
               direction='row'
               justifyContent='flex-end'
@@ -66,14 +60,25 @@ const CarouselCard = ({
               </Typography>
               <StyledRating readOnly value={rating} precision={0.5} />
             </Stack>
-            <Typography color='white'>{children}</Typography>
-            <Image
-              src='/sectionIcons/close-quote.svg'
-              alt='open quote'
-              height='65'
-              width='65'
-              style={{ float: 'right' }}
-            />
+            <Box sx={sxDetialWrapper}>
+              <Image
+                src='/sectionIcons/open-quote.svg'
+                alt='open quote'
+                fill
+                sizes='(max-width: 768px) 15vw, (max-width: 1200px) 10vw, 5vw'
+              />
+            </Box>
+            <Typography color='white' padding='10px 10px'>
+              {children}
+            </Typography>
+            <Box sx={{ ...sxDetialWrapper, float: 'right' }}>
+              <Image
+                src='/sectionIcons/close-quote.svg'
+                alt='open quote'
+                fill
+                sizes='(max-width: 768px) 15vw, (max-width: 1200px) 10vw, 5vw'
+              />
+            </Box>
           </Box>
         </Stack>
       </Box>

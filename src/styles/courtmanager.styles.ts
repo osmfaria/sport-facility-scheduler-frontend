@@ -15,3 +15,6 @@ export const SxSkeletonChip: SxProps = {
   margin: '20px 0',
 }
 export const SxLodadingBox: SxProps = { width: '100%', marginTop: 5 }
+export const sxButton = (theme: Theme) => ({
+  flex: '1 1 50%',
+})

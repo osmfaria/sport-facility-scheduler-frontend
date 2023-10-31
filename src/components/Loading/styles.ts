@@ -4,7 +4,7 @@ export const sxBox: SxProps = {
   position: 'fixed',
   height: '100%',
   width: '100%',
-  zIndex: 10,
+  zIndex: 110,
   top: 0,
   right: 0,
   background: 'rgba(255,255,255, 0.4)',

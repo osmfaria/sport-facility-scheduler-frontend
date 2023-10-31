@@ -91,7 +91,6 @@ const SectionTwo = () => {
                   <Button
                     endIcon={<Launch />}
                     variant='contained'
-                    sx={{ float: 'right' }}
                     onClick={handleSearchClick}
                   >
                     Start here
@@ -138,7 +137,6 @@ const SectionTwo = () => {
                   <Button
                     endIcon={<Launch />}
                     variant='contained'
-                    sx={{ float: 'right' }}
                     onClick={handleDashboardClick}
                   >
                     Start here

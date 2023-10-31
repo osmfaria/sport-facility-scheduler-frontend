@@ -115,13 +115,27 @@ function CalendarOptions({ chosenCourt }: { chosenCourt: Court }) {
                       }
                       sx={{ justifyContent: 'center' }}
                     >
-                      <ToggleButton value='SUNDAY'>SUN</ToggleButton>
-                      <ToggleButton value='MONDAY'>MON</ToggleButton>
-                      <ToggleButton value='TUESDAY'>TUE</ToggleButton>
-                      <ToggleButton value='WEDNESDAY'>WED</ToggleButton>
-                      <ToggleButton value='THURSDAY'>THU</ToggleButton>
-                      <ToggleButton value='FRIDAY'>FRI</ToggleButton>
-                      <ToggleButton value='SATURDAY'>SAT</ToggleButton>
+                      <ToggleButton value='SUNDAY' size='small'>
+                        SUN
+                      </ToggleButton>
+                      <ToggleButton value='MONDAY' size='small'>
+                        MON
+                      </ToggleButton>
+                      <ToggleButton value='TUESDAY' size='small'>
+                        TUE
+                      </ToggleButton>
+                      <ToggleButton value='WEDNESDAY' size='small'>
+                        WED
+                      </ToggleButton>
+                      <ToggleButton value='THURSDAY' size='small'>
+                        THU
+                      </ToggleButton>
+                      <ToggleButton value='FRIDAY' size='small'>
+                        FRI
+                      </ToggleButton>
+                      <ToggleButton value='SATURDAY' size='small'>
+                        SAT
+                      </ToggleButton>
                     </ToggleButtonGroup>
                   </FormControl>
                   <DialogContentText mb='20px'>
@@ -135,6 +149,7 @@ function CalendarOptions({ chosenCourt }: { chosenCourt: Court }) {
                             !!errors.closing_hour && !!touched.closing_hour
                           }
                           sx={sxFormControl}
+                          size='small'
                         >
                           <InputLabel id='select-opening-time-label'>
                             Opening time
@@ -164,6 +179,7 @@ function CalendarOptions({ chosenCourt }: { chosenCourt: Court }) {
                             !!errors.closing_hour && !!touched.closing_hour
                           }
                           sx={sxFormControl}
+                          size='small'
                         >
                           <InputLabel id='select-closing-time-label'>
                             Closing time
@@ -193,8 +209,17 @@ function CalendarOptions({ chosenCourt }: { chosenCourt: Court }) {
                   </DialogContentText>
                 </Stack>
               </DialogContent>
-              <DialogActions>
-                <Button variant='outlined' onClick={handleDialog}>
+              <DialogActions
+                sx={{
+                  maxWidth: { xs: '80%', sm: '50%' },
+                  margin: '0 0 0 auto',
+                }}
+              >
+                <Button
+                  variant='outlined'
+                  onClick={handleDialog}
+                  sx={{ flex: '1 1 50%' }}
+                >
                   Go back
                 </Button>
                 <LoadingButton
@@ -203,6 +228,7 @@ function CalendarOptions({ chosenCourt }: { chosenCourt: Court }) {
                   variant='contained'
                   color='success'
                   type='submit'
+                  sx={{ flex: '1 1 50%' }}
                 >
                   Save
                 </LoadingButton>

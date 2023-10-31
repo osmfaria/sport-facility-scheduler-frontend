@@ -9,10 +9,10 @@ import {
 } from '@/styles/dashboard.styles'
 import {
   CalendarMonth,
-  HomeWork,
   OpenInNew,
   Settings,
   Stadium,
+  Villa,
 } from '@mui/icons-material'
 import {
   Avatar,
@@ -56,7 +56,7 @@ const Dashboard = (): ReactElement => {
                 title='Manage Sport Venues'
                 avatar={
                   <Avatar sx={sxAvatar}>
-                    <HomeWork />
+                    <Villa />
                   </Avatar>
                 }
               />

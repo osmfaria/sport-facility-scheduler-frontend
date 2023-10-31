@@ -39,7 +39,7 @@ function Banner() {
             maxWidth='650px'
           >
             Uniting communities through sports. Unleash your inner athlete: Find
-            top sports facilities and book your next challange.
+            top sports facilities and book your next challenge.
           </Typography>
         </CustomSlideAnimation>
         <CustomSlideAnimation direction='right'>

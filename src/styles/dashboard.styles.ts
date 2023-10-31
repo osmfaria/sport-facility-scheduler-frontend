@@ -6,9 +6,12 @@ export const sxCard = (theme: Theme) => ({
   position: 'relative',
   overflow: 'visible',
   cursor: 'pointer',
-  // background: theme.palette.background.paper,
   background: 'rgba(255, 255, 255, 0.2)',
-
+  minHeight: '216px',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  alignItems: 'space-between',
   '&:hover': {
     boxShadow: 3,
   },

@@ -1,4 +1,5 @@
 import { SxProps, Theme } from '@mui/material'
+import { convertToObject } from 'typescript'
 
 export const sxContainer: SxProps = {
   position: 'relative',
@@ -6,13 +7,7 @@ export const sxContainer: SxProps = {
 }
 
 export const sxSpan = (theme: Theme) => ({
-  background: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-
-  backgroundClip: 'text',
-  WebkitBackgroundClip: 'text',
-
-  color: 'transparent',
-  WebkitTextFillColor: 'transparent',
+  color: theme.palette.primary.main,
 })
 
 export const sxImageWrapper = {

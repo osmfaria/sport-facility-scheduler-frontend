@@ -95,7 +95,6 @@ function SectionOne() {
                 <Button
                   endIcon={<Launch />}
                   variant='contained'
-                  sx={{ float: 'right' }}
                   onClick={() => router.push('/courts')}
                 >
                   Start here
@@ -142,7 +141,6 @@ function SectionOne() {
                 <Button
                   endIcon={<Launch />}
                   variant='contained'
-                  sx={{ float: 'right' }}
                   onClick={() => router.push('/dashboard')}
                 >
                   Start here

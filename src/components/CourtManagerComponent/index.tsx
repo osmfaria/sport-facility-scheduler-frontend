@@ -6,6 +6,7 @@ import {
   sxContainer,
   sxIcon,
   SxLodadingBox,
+  sxButton,
 } from '@/styles/courtmanager.styles'
 import { AddCircleOutline, Stadium } from '@mui/icons-material'
 import {
@@ -78,17 +79,20 @@ const CourtManagerComponent = () => {
           </FormControl>
         )}
       </Box>
-      <Stack direction='row' spacing={2}>
+      <Stack direction='row' spacing={2} maxWidth={{ xs: '100%', md: '50%' }}>
         <Button
           variant='contained'
           startIcon={<AddCircleOutline />}
           color='success'
           onClick={() => router.push('/dashboard/courtmanager/newcourt')}
+          sx={sxButton}
         >
           Add Venues
         </Button>
         <Button
           variant='outlined'
+          startIcon={<Stadium />}
+          sx={sxButton}
           onClick={() => router.push('/dashboard/facilitymanager/')}
         >
           Manage Facilities

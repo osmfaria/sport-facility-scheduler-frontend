@@ -34,7 +34,7 @@ const SectionThree = () => {
           Start here 💪
         </Button>
       </Fade>
-      <CustomGrowAnimation>
+      {/* <CustomGrowAnimation>
         <Box sx={sxImageWrapper}>
           <Image
             src='/main/woman.webp'
@@ -44,7 +44,7 @@ const SectionThree = () => {
             sizes='(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw'
           />
         </Box>
-      </CustomGrowAnimation>
+      </CustomGrowAnimation> */}
     </Container>
   )
 }
